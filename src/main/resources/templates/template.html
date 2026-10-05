@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Template</title>
+
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+  <header>
+    <h1>Template</h1>
+  </header>
+
+  <main>
+
+    <p>Welcome to the Template</p>
+
+    <h2>Test elements</h2>
+
+    <!-- Linkin testaus -->
+    <p>
+      <a href="#">Test link</a>
+    </p>
+
+    <!-- Painikkeen testaus -->
+    <button type="button">Test button</button>
+
+    <!-- Lomakekenttien testaus -->
+    <h3>Test form</h3>
+
+    <label for="name">Name</label>
+    <input type="text" id="name" placeholder="Enter name">
+
+    <label for="status">Status</label>
+    <select id="status">
+      <option>Unassigned</option>
+      <option>Assigned</option>
+      <option>Delivered</option>
+    </select>
+
+    <label for="notes">Notes</label>
+    <textarea id="notes" placeholder="Write notes here"></textarea>
+
+    <!-- Taulukon testaus -->
+    <h3>Test table</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Driver</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr>
+          <td>1001</td>
+          <td>John Doe</td>
+          <td>Assigned</td>
+        </tr>
+
+        <tr>
+          <td>1002</td>
+          <td>Jane Doe</td>
+          <td>Delivered</td>
+        </tr>
+      </tbody>
+    </table>
+
+  </main>
+
+</body>
+
+</html>

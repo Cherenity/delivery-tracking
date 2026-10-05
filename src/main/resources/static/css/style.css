@@ -1,0 +1,173 @@
+/* Alkuun haettu template.css tiedosto, joka sisältää perusasetukset ja tyylit verkkosivulle. Se määrittelee muun muassa fontin, taustavärin, linkkien ja painikkeiden ulkoasun sekä taulukon tyylit. */
+
+
+/* Sivun perusasetukset */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #222;
+}
+
+/* Yläpalkki */
+header {
+    background-color: #ffffff;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Pääotsikko */
+h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+/* Sivun pääsisältö */
+main {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+/* Tavalliset kappaleet */
+p {
+    line-height: 1.6;
+}
+
+/* Linkit */
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+/* Linkki, kun hiiri on sen päällä */
+a:hover {
+    text-decoration: underline;
+}
+
+/* Painikkeet */
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Lomakekentät */
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+/* Taulukko */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Taulukon solut */
+th,
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+/* Taulukon otsikkorivi */
+th {
+    background-color: #f0f0f0;
+}
+
+
+/* Sivun perusasetukset */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #f4f4f4;
+    color: #222;
+}
+
+/* Yläpalkki */
+header {
+    background-color: #ffffff;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Pääotsikko */
+h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+/* Sivun pääsisältö */
+main {
+    max-width: 1000px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+}
+
+/* Tavalliset kappaleet */
+p {
+    line-height: 1.6;
+}
+
+/* Linkit */
+a {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+/* Linkki, kun hiiri on sen päällä */
+a:hover {
+    text-decoration: underline;
+}
+
+/* Painikkeet */
+button {
+    padding: 10px 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Lomakekentät */
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+/* Taulukko */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+/* Taulukon solut */
+th,
+td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+/* Taulukon otsikkorivi */
+th {
+    background-color: #f0f0f0;
+}

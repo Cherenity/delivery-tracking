@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Order List</title>
+
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+  <header>
+    <h1>Order List</h1>
+  </header>
+
+  <main>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Order</th>
+          <th>Customer</th>
+          <th>Address</th>
+          <th>Delivery date</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr th:each="order : ${orders}">
+          <td th:text="${order.id}"></td>
+          <td th:text="${order.customer}"></td>
+          <td th:text="${order.address}"></td>
+          <td th:text="${order.deliveryDate}"></td>
+          <td th:text="${order.status}"></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </main>
+
+</body>
+
+</html>

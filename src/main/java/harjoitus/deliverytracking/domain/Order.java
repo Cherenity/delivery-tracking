@@ -3,6 +3,8 @@ package harjoitus.deliverytracking.domain;
 import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,12 +19,14 @@ public class Order {
   private String customer;
   private String address;
   private LocalDate deliveryDate;
-  private String status;
+
+  @Enumerated(EnumType.STRING)
+  private OrderStatus status;
 
   public Order() {
   }
 
-  public Order(String customer, String address, LocalDate deliveryDate, String status) {
+  public Order(String customer, String address, LocalDate deliveryDate, OrderStatus status) {
     this.customer = customer;
     this.address = address;
     this.deliveryDate = deliveryDate;
@@ -57,11 +61,11 @@ public class Order {
     this.deliveryDate = deliveryDate;
   }
 
-  public String getStatus() {
+  public OrderStatus getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(OrderStatus status) {
     this.status = status;
   }
 }

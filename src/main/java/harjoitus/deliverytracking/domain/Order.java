@@ -8,12 +8,21 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "orders")
 
 public class Order {
+  public enum OrderStatus {
+    UNASSIGNED,
+    ASSIGNED,
+    IN_PROGRESS,
+    DELIVERED,
+    CANCELLED
+  }
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,6 +34,10 @@ public class Order {
 
   @Enumerated(EnumType.STRING)
   private OrderStatus status;
+
+  @ManyToOne
+  @JoinColumn(name = "user_id")
+  private AppUser user;
 
   public Order() {
   }
@@ -38,6 +51,9 @@ public class Order {
 
   public Long getId() {
     return id;
+  }
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getCustomer() {
@@ -70,5 +86,13 @@ public class Order {
 
   public void setStatus(OrderStatus status) {
     this.status = status;
+  }
+
+  public AppUser getUser() {
+    return user;
+  }
+  
+  public void setUser(AppUser user) {
+    this.user = user;
   }
 }

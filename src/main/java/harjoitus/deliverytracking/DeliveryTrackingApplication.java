@@ -8,8 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import harjoitus.deliverytracking.domain.Order;
-import harjoitus.deliverytracking.domain.OrderStatus;
 import harjoitus.deliverytracking.repository.OrderRepository;
+
+import harjoitus.deliverytracking.domain.AppUser;
+import harjoitus.deliverytracking.repository.AppUserRepository;
 
 @SpringBootApplication
 public class DeliveryTrackingApplication {
@@ -17,34 +19,39 @@ public class DeliveryTrackingApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(DeliveryTrackingApplication.class, args);
 	}
+	// http://localhost:8080/h2-console/ Laitetty ylös
 
 	@Bean
-	public CommandLineRunner demoOrderData(OrderRepository orderRepository) {
+	// Demodataa lisätty
+	public CommandLineRunner demoOrderData(OrderRepository orderRepository, AppUserRepository userRepository) {
 		return (args) -> {
 
 			Order order1 = new Order(
-				"Prisma",
-				"Mannerheimintie 1",
-				LocalDate.of(2026, 10, 8),
-				OrderStatus.UNASSIGNED
-			);
+					"Prisma",
+					"Mannerheimintie 1",
+					LocalDate.of(2026, 10, 8),
+					Order.OrderStatus.UNASSIGNED);
 			orderRepository.save(order1);
 
 			Order order2 = new Order(
-				"K-Market",
-				"Aleksanterinkatu 10",
-				LocalDate.of(2026, 10, 8),
-				OrderStatus.UNASSIGNED
-			);
+					"K-Market",
+					"Aleksanterinkatu 10",
+					LocalDate.of(2026, 10, 8),
+					Order.OrderStatus.ASSIGNED);
 			orderRepository.save(order2);
 
 			Order order3 = new Order(
-				"Lidl",
-				"Hämeentie 20",
-				LocalDate.of(2026, 10, 9),
-				OrderStatus.ASSIGNED
-			);
+					"Lidl",
+					"Hämeentie 20",
+					LocalDate.of(2026, 10, 9),
+					Order.OrderStatus.IN_PROGRESS);
 			orderRepository.save(order3);
+
+			AppUser user1 = new AppUser("user1", "NOT_CONFIGURED", "user1@example.com", "USER");
+			AppUser user2 = new AppUser("user2", "NOT_CONFIGURED", "user2@example.com", "USER");
+
+			userRepository.save(user1);
+			userRepository.save(user2);
 
 		};
 	}

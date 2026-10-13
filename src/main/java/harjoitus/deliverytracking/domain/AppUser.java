@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -27,6 +28,9 @@ public class AppUser {
 
   @Column(name = "role", nullable = false)
   private String role;
+
+  @OneToMany (mappedBy = "user")
+  private java.util.List<Order> orders;
 
   public AppUser() {
   }

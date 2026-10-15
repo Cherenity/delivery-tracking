@@ -13,6 +13,8 @@ import harjoitus.deliverytracking.domain.Order;
 import harjoitus.deliverytracking.repository.OrderRepository;
 import org.springframework.web.bind.annotation.RequestParam;
 
+// http://localhost:8080/orderList
+
 @Controller
 public class OrderController {
 
@@ -28,6 +30,16 @@ public class OrderController {
     public String showOrders(Model model) {
         model.addAttribute("orders", orderRepository.findAll());
         // Yksi tyhjä Order-olio lomaketta varten
+        model.addAttribute("order", new Order());
+        model.addAttribute("users", appUserRepository.findAll());
+
+        return "orderList";
+    }
+
+    @GetMapping("/orderList/{userId}")
+    public String showDriverOrders(@PathVariable Long userId, Model model) {
+
+        model.addAttribute("orders", orderRepository.findByUserId(userId));
         model.addAttribute("order", new Order());
         model.addAttribute("users", appUserRepository.findAll());
 
@@ -63,8 +75,6 @@ public class OrderController {
 
         return "redirect:/orderList";
     }
-
-
 
     @GetMapping("/modifyOrder/{id}")
     public String modifyOrder(@PathVariable Long id, Model model) {

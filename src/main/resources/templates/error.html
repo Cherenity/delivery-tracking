@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <title>Error | Delivery Tracking</title>
+
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+  <header>
+    <h1>Error | Delivery Tracking</h1>
+  </header>
+
+  <main>
+    <h2>Error</h2>
+
+    <p th:text="${errorMessage}">An error occurred.</p>
+
+  </main>
+
+</body>
+
+</html>

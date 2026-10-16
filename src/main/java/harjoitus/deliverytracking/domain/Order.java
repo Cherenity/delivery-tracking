@@ -11,6 +11,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "orders")
@@ -28,10 +31,19 @@ public class Order {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @NotBlank(message = "Customer is required")
+  @Size(min = 2, max = 100)
   private String customer;
+
+  @NotBlank(message = "Address is required")
+  @Size(min = 5, max = 200)
   private String address;
+
+  // @FutureOrPresent(message = "Delivery date cannot be in the past") | Ei käytetä kaatuu, jos menneisyydessä oleva päivämäärä
+  @NotNull(message = "Delivery date is required")
   private LocalDate deliveryDate;
 
+  
   @Enumerated(EnumType.STRING)
   private OrderStatus status;
 
@@ -47,6 +59,13 @@ public class Order {
     this.address = address;
     this.deliveryDate = deliveryDate;
     this.status = status;
+  }
+
+  public Order(String customer, String address, LocalDate deliveryDate) {
+    this.customer = customer;
+    this.address = address;
+    this.deliveryDate = deliveryDate;
+    this.status = OrderStatus.UNASSIGNED;
   }
 
   public Long getId() {

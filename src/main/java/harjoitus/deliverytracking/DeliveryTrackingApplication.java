@@ -29,8 +29,8 @@ public class DeliveryTrackingApplication {
 			Order order1 = new Order(
 					"Prisma",
 					"Mannerheimintie 1",
-					LocalDate.of(2026, 11, 11),
-					Order.OrderStatus.UNASSIGNED);
+					LocalDate.of(2026, 11, 11)
+			);
 			orderRepository.save(order1);
 
 			Order order2 = new Order(

@@ -51,7 +51,7 @@ public class Order {
   
   @Enumerated(EnumType.STRING)
   @Column(name = "status", nullable = false)
-  private OrderStatus status;
+  private OrderStatus status = OrderStatus.UNASSIGNED;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
@@ -71,7 +71,6 @@ public class Order {
     this.customer = customer;
     this.address = address;
     this.deliveryDate = deliveryDate;
-    this.status = OrderStatus.UNASSIGNED;
   }
 
   public Long getId() {

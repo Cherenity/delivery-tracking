@@ -29,21 +29,21 @@ public class DeliveryTrackingApplication {
 			Order order1 = new Order(
 					"Prisma",
 					"Mannerheimintie 1",
-					LocalDate.of(2026, 10, 8),
+					LocalDate.of(2026, 11, 11),
 					Order.OrderStatus.UNASSIGNED);
 			orderRepository.save(order1);
 
 			Order order2 = new Order(
 					"K-Market",
 					"Aleksanterinkatu 10",
-					LocalDate.of(2026, 10, 8),
+					LocalDate.of(2026, 11, 12),
 					Order.OrderStatus.ASSIGNED);
 			orderRepository.save(order2);
 
 			Order order3 = new Order(
 					"Lidl",
 					"Hämeentie 20",
-					LocalDate.of(2026, 10, 9),
+					LocalDate.of(2026, 11, 11),
 					Order.OrderStatus.IN_PROGRESS);
 			orderRepository.save(order3);
 

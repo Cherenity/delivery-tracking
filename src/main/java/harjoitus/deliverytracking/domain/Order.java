@@ -2,6 +2,8 @@ package harjoitus.deliverytracking.domain;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -35,7 +37,7 @@ public class Order {
 
   @NotBlank(message = "Customer is required")
   @Size(min = 2, max = 100)
-  @Column (name = "customer", nullable = false)
+  @Column(name = "customer", nullable = false)
   private String customer;
 
   @NotBlank(message = "Address is required")
@@ -43,12 +45,13 @@ public class Order {
   @Column(name = "address", nullable = false)
   private String address;
 
-  // @FutureOrPresent(message = "Delivery date cannot be in the past") | Ei käytetä kaatuu, jos menneisyydessä oleva päivämäärä
+  // @FutureOrPresent(message = "Delivery date cannot be in the past") | Ei
+  // käytetä kaatuu, jos menneisyydessä oleva päivämäärä
   @NotNull(message = "Delivery date is required")
-  @Column (name = "delivery_date", nullable = false)
+  @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+  @Column(name = "delivery_date", nullable = false)
   private LocalDate deliveryDate;
 
-  
   @Enumerated(EnumType.STRING)
   @Column(name = "status", nullable = false)
   private OrderStatus status = OrderStatus.UNASSIGNED;
@@ -56,6 +59,9 @@ public class Order {
   @ManyToOne
   @JoinColumn(name = "user_id")
   private AppUser user;
+
+  @Column(name = "delivery_order")
+  private Integer deliveryOrder;
 
   public Order() {
   }
@@ -76,6 +82,7 @@ public class Order {
   public Long getId() {
     return id;
   }
+
   public void setId(Long id) {
     this.id = id;
   }
@@ -115,8 +122,16 @@ public class Order {
   public AppUser getUser() {
     return user;
   }
-  
+
   public void setUser(AppUser user) {
     this.user = user;
+  }
+
+  public Integer getDeliveryOrder() {
+    return deliveryOrder;
+  }
+
+  public void setDeliveryOrder(Integer deliveryOrder) {
+    this.deliveryOrder = deliveryOrder;
   }
 }

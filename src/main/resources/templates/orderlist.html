@@ -3,7 +3,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Admin View</title>
+  <title>Order Management</title>
 
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
@@ -11,7 +11,7 @@
 <body>
 
   <header>
-    <h1>Admin View</h1>
+    <h1>Order Management</h1>
   </header>
 
   <main>
@@ -22,22 +22,23 @@
       <div>
         <label for="customer">Customer:</label>
         <input type="text" id="customer" th:field="*{customer}">
+        <span class="error" th:if="${#fields.hasErrors('customer')}" th:errors="*{customer}">Customer Error</span>
       </div>
-      <span class="error" th:if="${#fields.hasErrors('customer')}" th:errors="*{customer}">Customer Error</span>
 
       <div>
         <label for="address">Address:</label>
         <input type="text" id="address" th:field="*{address}">
+        <span class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</span>
       </div>
-      <span class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</span>
+
 
       <div>
         <label for="deliveryDate">Delivery Date:</label>
         <input type="date" id="deliveryDate" th:field="*{deliveryDate}">
+        <span class="error" th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}">Delivery Date
+          Error</span>
       </div>
 
-      <span class="error" th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}">Delivery Date
-        Error</span>
 
       <button type="submit">Add Order</button>
 
@@ -71,8 +72,9 @@
 
               <input type="hidden" name="orderId" th:value="${order.id}">
 
-              <select name="userId">
-                <option value="">Unassigned</option>
+              <select name="userId" th:classappend="${order.user == null} ? 'highlight-red' : 'highlight-green'">
+                <option value="" th:selected="${order.user == null}">Unassigned</option>
+
 
                 <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"
                   th:selected="${order.user != null and order.user.id == user.id}">
@@ -84,7 +86,7 @@
 
             </form>
           </td>
-
+          <!-- Testaukseen: <td th:text="${order.user != null ? order.user.username : 'Unassigned'}"></td> -->
 
           <td>
             <a th:href="@{/modifyOrder/{id}(id=${order.id})}" class="edit-button">

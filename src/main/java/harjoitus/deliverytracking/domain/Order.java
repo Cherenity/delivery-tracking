@@ -27,6 +27,7 @@ public class Order {
     ASSIGNED,
     IN_PROGRESS,
     DELIVERED,
+    FAILED_DELIVERY,
     CANCELLED
   }
 

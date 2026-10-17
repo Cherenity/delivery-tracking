@@ -20,6 +20,7 @@ public class DeliveryTrackingApplication {
 		SpringApplication.run(DeliveryTrackingApplication.class, args);
 	}
 	// http://localhost:8080/h2-console/ Laitetty ylös
+	// http://localhost:8080/orderList
 
 	@Bean
 	// Demodataa lisätty
@@ -29,21 +30,21 @@ public class DeliveryTrackingApplication {
 			Order order1 = new Order(
 					"Prisma",
 					"Mannerheimintie 1",
-					LocalDate.of(2026, 11, 11)
+					LocalDate.now()
 			);
 			orderRepository.save(order1);
 
 			Order order2 = new Order(
 					"K-Market",
 					"Aleksanterinkatu 10",
-					LocalDate.of(2026, 11, 12),
+					LocalDate.now(),
 					Order.OrderStatus.ASSIGNED);
 			orderRepository.save(order2);
 
 			Order order3 = new Order(
 					"Lidl",
 					"Hämeentie 20",
-					LocalDate.of(2026, 11, 11),
+					LocalDate.now(),
 					Order.OrderStatus.IN_PROGRESS);
 			orderRepository.save(order3);
 

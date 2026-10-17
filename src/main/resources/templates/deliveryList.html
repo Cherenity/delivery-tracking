@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>My Deliveries</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+  <header>
+    <h1>Welcome User</h1>
+  </header>
+
+  <main>
+    <h2>Delivery List</h2>
+
+    <!-- Aloittaa päivän toimitukset -->
+    Assigned deliveries: <span th:text="${assignedCount}"></span>
+    <br></br>
+
+    <form th:if="${assignedCount > 0}" th:action="@{/deliveryList/{userId}/start(userId=${userId})}" method="post">
+
+      <button type="submit">Start Deliveries</button>
+
+    </form>
+
+    <br></br>
+
+
+    <!-- Näytetään kuljettajan tilaukset -->
+    <div th:each="order : ${orders}" class="delivery-card">
+
+      <div class="delivery-info">
+
+        <div>
+          <strong>Customer: </strong>
+          <span th:text="${order.customer}"></span>
+        </div>
+
+        <div style="padding-top: 8px;">
+          <strong>Address: </strong>
+          <a th:href="@{https://www.google.com/maps/search/(api=1,query=${order.address})}" th:text="${order.address}"
+            target="_blank" rel="noopener noreferrer">
+          </a>
+        </div>
+
+      </div>
+
+      <span th:text="${order.status}"></span>
+
+      <!-- Toimituksen tilan päivittäminen -->
+      <form th:if="${order.status.name() == 'IN_PROGRESS'}"
+        th:action="@{/deliveryList/{userId}/status(userId=${userId})}" method="post">
+
+        <input type="hidden" name="orderId" th:value="${order.id}">
+
+        <select name="status">
+          <option value="DELIVERED">Delivered</option>
+          <option value="FAILED_DELIVERY">Failed Delivery</option>
+        </select>
+
+        <button type="submit">Save</button>
+      </form>
+
+
+    </div>
+
+  </main>
+
+</body>
+
+</html>

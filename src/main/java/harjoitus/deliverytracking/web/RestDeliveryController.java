@@ -1,5 +1,7 @@
 package harjoitus.deliverytracking.web;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,6 +43,11 @@ public class RestDeliveryController {
     return orderRepository.save(order);
   }
 
+  @PostMapping("/orders/bulk")
+  public Iterable<Order> addOrders(@RequestBody List<Order> orders) {
+    return orderRepository.saveAll(orders);
+  }
+
   @DeleteMapping("/orders/{id}")
   public void deleteOrder(@PathVariable Long id) {
     orderRepository.deleteById(id);
@@ -57,6 +64,5 @@ public class RestDeliveryController {
 
     return orderRepository.save(existingOrder);
   }
-
 
 }

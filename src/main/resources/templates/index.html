@@ -2,19 +2,79 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Homepage</title>
-
+  <meta charset="UTF-8">
+  <title>Delivery Tracking - Home</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
 
   <header>
-    <h1>Homepage</h1>
+    <h1>Delivery Tracking</h1>
+    <p>Delivery management system</p>
   </header>
 
-  <main> Homepage content goes here. </main>
+  <main>
+
+    <h2>Welcome!</h2>
+    <p>Manage orders and track deliveries in one place.</p>
+
+    <!-- Adminin näkymä -->
+    <section sec:authorize="hasAuthority('ADMIN')">
+
+      <h3>Order Management</h3>
+      <p>View, create and manage delivery orders.</p>
+      <a th:href="@{/orderList}">Manage Orders</a>
+
+      <!-- Tämän päivän toimitustilastot -->
+      <h3>Today's Delivery Overview</h3>
+      <p>Track today's delivery progress and order statuses.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Orders</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td>Total Orders</td>
+            <td th:text="${totalCount}">0</td>
+          </tr>
+          <tr>
+            <td>In Progress</td>
+            <td th:text="${inProgressCount}">0</td>
+          </tr>
+          <tr>
+            <td>Delivered</td>
+            <td th:text="${deliveredCount}">0</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </section>
+
+    <!-- Kuljettajan näkymä -->
+    <section sec:authorize="hasAuthority('USER')">
+
+      <h3>My Deliveries</h3>
+      <p>View your assigned deliveries and update their status.</p>
+
+      <!-- Korvataan kirjautuneen käyttäjän ID:llä myöhemmin -->
+      <a th:href="@{/deliveryList/1}">View My Deliveries</a>
+
+    </section>
+    <br></br>
+    <!-- Uloskirjautuminen -->
+    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()">
+
+      <button type="submit">Logout</button>
+
+    </form>
+
+  </main>
 
 </body>
 

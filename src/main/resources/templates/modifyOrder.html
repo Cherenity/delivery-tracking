@@ -19,11 +19,24 @@
     <h2>Edit Order</h2>
 
     <p>Order ID: <span th:text="${order.id}"></span></p>
-    <p>Status: <span th:text="${order.status}"></span></p>
 
     <form th:action="@{/updateOrder}" th:object="${order}" method="post">
 
       <input type="hidden" th:field="*{id}">
+
+      <!-- Tilauksen tilan muuttaminen -->
+      <div>
+        <label for="status">Status:</label>
+
+        <select id="status" th:field="*{status}">
+          <option value="UNASSIGNED">Unassigned</option>
+          <option value="ASSIGNED">Assigned</option>
+          <option value="IN_PROGRESS">In Progress</option>
+          <option value="DELIVERED">Delivered</option>
+          <option value="FAILED_DELIVERY">Failed Delivery</option>
+          <option value="CANCELLED">Cancelled</option>
+        </select>
+      </div>
 
       <div>
         <label for="customer">Customer:</label>
@@ -44,7 +57,7 @@
 
         <input type="date" id="deliveryDate" th:field="*{deliveryDate}" required>
       </div>
-      
+
       <button type="submit">Save Changes</button>
 
     </form>

@@ -3,15 +3,12 @@ package harjoitus.deliverytracking.web;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
-
-@Controller 
+@Controller
 public class HomeController {
 
-  @GetMapping("/hello")
-  public String testMethod() {
-      return "template";
+  @GetMapping({"/", "/index"})
+  public String index() {
+    return "index";
   }
-  
- 
 
 }

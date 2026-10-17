@@ -10,14 +10,18 @@
 <body>
 
   <header>
-    <h1>Welcome User</h1>
+    <h1>Welcome, <span th:text="${username}"></span>!</h1>
   </header>
 
   <main>
     <h2>Delivery List</h2>
 
     <!-- Aloittaa päivän toimitukset -->
-    Assigned deliveries: <span th:text="${assignedCount}"></span>
+    <p>
+      Today's Deliveries
+      (<span th:text="${#temporals.format(today, 'dd.MM.yyyy')}"></span>):
+      <span th:text="${orders.size()}"></span>
+    </p>
     <br></br>
 
     <form th:if="${assignedCount > 0}" th:action="@{/deliveryList/{userId}/start(userId=${userId})}" method="post">
@@ -25,8 +29,6 @@
       <button type="submit">Start Deliveries</button>
 
     </form>
-
-    <br></br>
 
 
     <!-- Näytetään kuljettajan tilaukset -->
@@ -41,8 +43,7 @@
 
         <div style="padding-top: 8px;">
           <strong>Address: </strong>
-          <a th:href="@{https://www.google.com/maps/search/(api=1,query=${order.address})}" th:text="${order.address}"
-            target="_blank" rel="noopener noreferrer">
+          <a th:href="@{https://www.google.com/maps/search/(api=1,query=${order.address})}" th:text="${order.address}">
           </a>
         </div>
 
@@ -51,14 +52,19 @@
       <span th:text="${order.status}"></span>
 
       <!-- Toimituksen tilan päivittäminen -->
-      <form th:if="${order.status.name() == 'IN_PROGRESS'}"
-        th:action="@{/deliveryList/{userId}/status(userId=${userId})}" method="post">
+      <form th:if="${order.status.name() != 'ASSIGNED'}" th:action="@{/deliveryList/{userId}/status(userId=${userId})}"
+        method="post">
 
         <input type="hidden" name="orderId" th:value="${order.id}">
 
         <select name="status">
-          <option value="DELIVERED">Delivered</option>
-          <option value="FAILED_DELIVERY">Failed Delivery</option>
+          <option value="DELIVERED" th:selected="${order.status.name() == 'DELIVERED'}">
+            Delivered
+          </option>
+
+          <option value="FAILED_DELIVERY" th:selected="${order.status.name() == 'FAILED_DELIVERY'}">
+            Failed Delivery
+          </option>
         </select>
 
         <button type="submit">Save</button>

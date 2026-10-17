@@ -7,16 +7,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import harjoitus.deliverytracking.domain.AppUser;
 import harjoitus.deliverytracking.domain.Order;
+import harjoitus.deliverytracking.repository.AppUserRepository;
 import harjoitus.deliverytracking.repository.OrderRepository;
 
 @Controller
 public class DeliveryController {
 
     private final OrderRepository orderRepository;
+    private final AppUserRepository appUserRepository;
 
-    public DeliveryController(OrderRepository orderRepository) {
+    public DeliveryController(OrderRepository orderRepository, AppUserRepository appUserRepository) {
         this.orderRepository = orderRepository;
+        this.appUserRepository = appUserRepository;
     }
 
     // Näyttää kuljettajan toimitukset järjestyksessä
@@ -25,7 +29,12 @@ public class DeliveryController {
     public String showDeliveries(@PathVariable Long userId, @RequestParam(defaultValue = "false") boolean started,
             Model model) {
 
+        AppUser user = appUserRepository.findById(userId).orElseThrow();
+        model.addAttribute("username", user.getUsername());
+
         LocalDate today = LocalDate.now();
+
+        model.addAttribute("today", today);
 
         model.addAttribute("orders",
                 orderRepository.findByUserIdAndDeliveryDateOrderByDeliveryOrderAscIdAsc(userId, today));
@@ -34,8 +43,9 @@ public class DeliveryController {
         model.addAttribute("started", started);
 
         // tilausten lkm
-        int assignedCount = orderRepository.countByUserIdAndDeliveryDateAndStatus(userId, today, Order.OrderStatus.ASSIGNED);
-                
+        long assignedCount = orderRepository.countByUserIdAndDeliveryDateAndStatus(userId, today,
+                Order.OrderStatus.ASSIGNED);
+
         model.addAttribute("assignedCount", assignedCount);
 
         return "deliveryList";
@@ -74,14 +84,21 @@ public class DeliveryController {
             throw new IllegalArgumentException("Invalid driver");
         }
 
-        // Sallitaan vain aloitetun toimituksen kuittaaminen
-        if (order.getStatus() == Order.OrderStatus.IN_PROGRESS &&
-                (status == Order.OrderStatus.DELIVERED ||
-                        status == Order.OrderStatus.FAILED_DELIVERY)) {
-
-            order.setStatus(status);
-            orderRepository.save(order);
+        // Sallitaan vain aloitetun toimituksen päivittäminen
+        if (order.getStatus() == Order.OrderStatus.ASSIGNED ||
+                order.getStatus() == Order.OrderStatus.UNASSIGNED ||
+                order.getStatus() == Order.OrderStatus.CANCELLED) {
+            throw new IllegalArgumentException("Delivery not in progress");
         }
+
+        // Sallitaan vain toimitettu tai epäonnistunut
+        if (status != Order.OrderStatus.DELIVERED &&
+                status != Order.OrderStatus.FAILED_DELIVERY) {
+            throw new IllegalArgumentException("Invalid status");
+        }
+
+        order.setStatus(status);
+        orderRepository.save(order);
 
         return "redirect:/deliveryList/" + userId;
     }

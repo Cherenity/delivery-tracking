@@ -54,6 +54,8 @@
           <th>Address</th>
           <th>Delivery date</th>
           <th>Status</th>
+          <th>Driver</th>
+          <th></th>
           <th>Assign driver</th>
           <th></th>
         </tr>
@@ -66,7 +68,8 @@
           <td th:text="${order.address}"></td>
           <td th:text="${order.deliveryDate}"></td>
           <td th:text="${order.status}"></td>
-
+          <td th:text="${order.user != null ? order.user.username : 'Unassigned'}"></td>
+          <td></td>
           <td>
             <form th:action="@{/assignDriver}" method="post">
 

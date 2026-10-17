@@ -1,6 +1,9 @@
 package harjoitus.deliverytracking.web;
 
 import harjoitus.deliverytracking.repository.AppUserRepository;
+
+import java.time.LocalDate;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,9 +34,17 @@ public class OrderController {
 
     @GetMapping("/orderList")
     public String showOrders(Model model) {
+        
         model.addAttribute("orders", orderRepository.findAll());
         // Yksi tyhjä Order-olio lomaketta varten
-        model.addAttribute("order", new Order());
+
+        Order order = new Order();
+        LocalDate today = LocalDate.now();
+
+        order.setDeliveryDate(today);
+
+        model.addAttribute("order", order);
+        
         model.addAttribute("users", appUserRepository.findAll());
 
         return "orderList";
@@ -100,6 +111,7 @@ public class OrderController {
 
         Order existingOrder = orderRepository.findById(order.getId()).orElseThrow();
 
+        existingOrder.setStatus(order.getStatus());
         existingOrder.setCustomer(order.getCustomer());
         existingOrder.setAddress(order.getAddress());
         existingOrder.setDeliveryDate(order.getDeliveryDate());

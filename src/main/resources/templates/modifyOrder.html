@@ -38,8 +38,8 @@
       <div>
         <label for="deliveryDate">
           Delivery Date:
-          <span
-            th:text="${order.deliveryDate != null ? #temporals.format(order.deliveryDate, 'dd.MM.yyyy') : 'Not set'}"></span>
+          <!-- <span
+            th:text="${order.deliveryDate != null ? #temporals.format(order.deliveryDate, 'dd.MM.yyyy') : 'Not set'}"></span> -->
         </label>
 
         <input type="date" id="deliveryDate" th:field="*{deliveryDate}" required>

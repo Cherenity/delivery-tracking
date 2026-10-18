@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api")
-public class RestDeliveryController {
+public class OrderRestController {
 
   private final AppUserRepository appUserRepository;
   private final OrderRepository orderRepository;
 
-  public RestDeliveryController(OrderRepository orderRepository, AppUserRepository appUserRepository) {
+  public OrderRestController(OrderRepository orderRepository, AppUserRepository appUserRepository) {
     this.orderRepository = orderRepository;
     this.appUserRepository = appUserRepository;
   }

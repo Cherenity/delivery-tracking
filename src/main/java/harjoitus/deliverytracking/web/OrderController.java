@@ -160,7 +160,7 @@ public class OrderController {
     // KULJETTAJIEN MÄÄRITYKSET (SAA LISÄTÄ USEAMPIA)
 
     /// Näyttää kuljettajien määrityssivun
-    @GetMapping("/assignDrivers")
+    @GetMapping("/assign-drivers")
     public String showAssignDrivers(Model model) {
 
         model.addAttribute("orders",
@@ -168,7 +168,7 @@ public class OrderController {
 
         model.addAttribute("users", appUserRepository.findAll());
 
-        return "assignDrivers";
+        return "assign-drivers";
     }
 
     // Määrittää useita tilauksia yhdelle kuljettajalle
@@ -200,7 +200,7 @@ public class OrderController {
             orderRepository.save(order);
         }
 
-        return "redirect:/assignDrivers";
+        return "redirect:/assign-drivers";
     }
 
 }

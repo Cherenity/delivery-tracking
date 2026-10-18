@@ -210,3 +210,16 @@ th {
     color: white;
     text-decoration: none;
 }
+
+/* Rullattava tilaustaulukko */
+.scrollable-table {
+    max-height: 350px;
+    overflow-y: auto;
+}
+
+/* Taulukon otsikot pysyvät näkyvissä rullattaessa */
+.scrollable-table th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}

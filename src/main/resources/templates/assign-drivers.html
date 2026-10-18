@@ -11,7 +11,7 @@
 
   <!-- Yhteinen header -->
   <div th:replace="~{header :: header}"></div>
-  
+
   <main>
 
     <h2>Unassigned Orders</h2>
@@ -20,29 +20,34 @@
     <!-- Usean tilauksen määritys -->
     <form th:action="@{/assignMultiple}" method="post">
 
-      <table>
-        <thead>
-          <tr>
-            <th>Select</th>
-            <th>Order</th>
-            <th>Customer</th>
-            <th>Address</th>
-            <th>Delivery Date</th>
-          </tr>
-        </thead>
+      <!-- Rullattava tilauslista -->
+      <div class="scrollable-table">
 
-        <tbody>
-          <tr th:each="order : ${orders}">
-            <td>
-              <input type="checkbox" name="orderIds" th:value="${order.id}">
-            </td>
-            <td th:text="${order.id}"></td>
-            <td th:text="${order.customer}"></td>
-            <td th:text="${order.address}"></td>
-            <td th:text="${order.deliveryDate}"></td>
-          </tr>
-        </tbody>
-      </table>
+        <table>
+          <thead>
+            <tr>
+              <th>Select</th>
+              <th>Order</th>
+              <th>Customer</th>
+              <th>Address</th>
+              <th>Delivery Date</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr th:each="order : ${orders}">
+              <td>
+                <input type="checkbox" name="orderIds" th:value="${order.id}">
+              </td>
+              <td th:text="${order.id}"></td>
+              <td th:text="${order.customer}"></td>
+              <td th:text="${order.address}"></td>
+              <td th:text="${order.deliveryDate}"></td>
+            </tr>
+          </tbody>
+        </table>
+
+      </div>
 
       <p th:if="${#lists.isEmpty(orders)}">
         No unassigned orders.
@@ -63,9 +68,12 @@
 
     </form>
 
-    <p>
-      <a th:href="@{/orderList}">Back to Orders</a>
-    </p>
+    <!-- Takaisin tilauslistaan -->
+    <form th:action="@{/orders}" method="get" style="margin-top: 20px;">
+      <button type="submit">
+        <i class="bi bi-arrow-left"></i> Back to Orders
+      </button>
+    </form>
 
   </main>
 

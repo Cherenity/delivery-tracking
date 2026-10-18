@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -29,6 +30,25 @@ public class Order {
     DELIVERED,
     FAILED_DELIVERY,
     CANCELLED
+  }
+
+  // Tarkistaa statuksen ja kuljettajan yhteensopivuuden
+  @AssertTrue(message = "Invalid status and driver combination")
+  public boolean isValidStatusAndDriver() {
+
+    if (status == null) {
+      return false;
+    }
+
+    if (status == OrderStatus.UNASSIGNED) {
+      return user == null;
+    }
+
+    if (status == OrderStatus.CANCELLED) {
+      return true;
+    }
+
+    return user != null;
   }
 
   @Id
@@ -67,12 +87,13 @@ public class Order {
   public Order() {
   }
 
-  public Order(String customer, String address, LocalDate deliveryDate, OrderStatus status) {
-    this.customer = customer;
-    this.address = address;
-    this.deliveryDate = deliveryDate;
-    this.status = status;
-  }
+  // uudet tilaukset aina ilman statusta... public Order(String customer, String
+  // address, LocalDate deliveryDate, OrderStatus status) {
+  // this.customer = customer;
+  // this.address = address;
+  // this.deliveryDate = deliveryDate;
+  // this.status = status;
+  // }
 
   public Order(String customer, String address, LocalDate deliveryDate) {
     this.customer = customer;

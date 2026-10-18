@@ -1,5 +1,5 @@
 
-package harjoitus.deliverytracking.web;
+package harjoitus.deliverytracking.security;
 
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;

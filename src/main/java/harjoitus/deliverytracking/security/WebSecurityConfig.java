@@ -1,5 +1,5 @@
 
-package harjoitus.deliverytracking;
+package harjoitus.deliverytracking.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

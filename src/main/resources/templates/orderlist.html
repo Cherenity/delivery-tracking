@@ -34,7 +34,8 @@
 
       <div>
         <label for="deliveryDate">Delivery Date:</label>
-        <input type="date" id="deliveryDate" th:field="*{deliveryDate}">
+        <!-- Lisätty, että uutta luotaessa min tänään -->
+        <input type="date" id="deliveryDate" th:field="*{deliveryDate}" th:min="${today}">
         <span class="error" th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}">Delivery Date
           Error</span>
       </div>
@@ -46,61 +47,45 @@
 
     <h2>Orders</h2>
 
+    <p>View and manage delivery orders.</p>
+
+    <a th:href="@{/assignDrivers}">Assign Drivers</a>
+
     <table>
-      <thead>
-        <tr>
-          <th>Order</th>
-          <th>Customer</th>
-          <th>Address</th>
-          <th>Delivery date</th>
-          <th>Status</th>
-          <th>Driver</th>
-          <th></th>
-          <th>Assign driver</th>
-          <th></th>
-        </tr>
-      </thead>
 
-      <tbody>
-        <tr th:each="order : ${orders}">
-          <td th:text="${order.id}"></td>
-          <td th:text="${order.customer}"></td>
-          <td th:text="${order.address}"></td>
-          <td th:text="${order.deliveryDate}"></td>
-          <td th:text="${order.status}"></td>
-          <td th:text="${order.user != null ? order.user.username : 'Unassigned'}"></td>
-          <td></td>
-          <td>
-            <form th:action="@{/assignDriver}" method="post">
+      <table>
+        <thead>
+          <tr>
+            <th>Order</th>
+            <th>Customer</th>
+            <th>Address</th>
+            <th>Delivery date</th>
+            <th>Status</th>
+            <th>Driver</th>
+            <th></th>
+          </tr>
+        </thead>
 
-              <input type="hidden" name="orderId" th:value="${order.id}">
+        <tbody>
+          <tr th:each="order : ${orders}">
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.customer}"></td>
+            <td th:text="${order.address}"></td>
+            <td th:text="${order.deliveryDate}"></td>
+            <td th:text="${order.status}"></td>
+            <td th:text="${order.user != null ? order.user.username : 'Unassigned'}"></td>
+            <td></td>
 
-              <select name="userId" th:classappend="${order.user == null} ? 'highlight-red' : 'highlight-green'">
-                <option value="" th:selected="${order.user == null}">Unassigned</option>
-
-
-                <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"
-                  th:selected="${order.user != null and order.user.id == user.id}">
-                </option>
-                <!-- näytetään käyttäjä, jos määritetty ^ -->
-              </select>
-
-              <button type="submit">Save</button>
-
-            </form>
-          </td>
-          <!-- Testaukseen: <td th:text="${order.user != null ? order.user.username : 'Unassigned'}"></td> -->
-
-          <td>
-            <a th:href="@{/modifyOrder/{id}(id=${order.id})}" class="edit-button">
-              <i class="bi bi-pencil-square"></i> Modify
-            </a>
-          </td>
+            <td>
+              <a th:href="@{/modifyOrder/{id}(id=${order.id})}" class="edit-button">
+                <i class="bi bi-pencil-square"></i> Modify
+              </a>
+            </td>
 
 
-        </tr>
-      </tbody>
-    </table>
+          </tr>
+        </tbody>
+      </table>
 
   </main>
 

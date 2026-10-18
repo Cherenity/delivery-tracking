@@ -2,9 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta charset="UTF-8">
   <title>Modify Order</title>
-
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
@@ -17,51 +16,84 @@
   <main>
 
     <h2>Edit Order</h2>
-
     <p>Order ID: <span th:text="${order.id}"></span></p>
+
+    <!-- Tilauksen perustietojen muokkaaminen -->
+    <h3>Order Details</h3>
+    <p>Edit customer and delivery information.</p>
 
     <form th:action="@{/updateOrder}" th:object="${order}" method="post">
 
       <input type="hidden" th:field="*{id}">
 
-      <!-- Tilauksen tilan muuttaminen -->
-      <div>
-        <label for="status">Status:</label>
-
-        <select id="status" th:field="*{status}">
-          <option value="UNASSIGNED">Unassigned</option>
-          <option value="ASSIGNED">Assigned</option>
-          <option value="IN_PROGRESS">In Progress</option>
-          <option value="DELIVERED">Delivered</option>
-          <option value="FAILED_DELIVERY">Failed Delivery</option>
-          <option value="CANCELLED">Cancelled</option>
-        </select>
-      </div>
-
       <div>
         <label for="customer">Customer:</label>
-        <input type="text" id="customer" th:field="*{customer}" required>
+        <input type="text" id="customer" th:field="*{customer}">
+        <span class="error" th:if="${#fields.hasErrors('customer')}" th:errors="*{customer}">Customer Error</span>
       </div>
 
       <div>
         <label for="address">Address:</label>
-        <input type="text" id="address" th:field="*{address}" required>
+        <input type="text" id="address" th:field="*{address}">
+        <span class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">Address Error</span>
       </div>
 
       <div>
-        <label for="deliveryDate">
-          Delivery Date:
-          <!-- <span
-            th:text="${order.deliveryDate != null ? #temporals.format(order.deliveryDate, 'dd.MM.yyyy') : 'Not set'}"></span> -->
-        </label>
-
-        <input type="date" id="deliveryDate" th:field="*{deliveryDate}" required>
+        <label for="deliveryDate">Delivery Date:</label>
+        <input type="date" id="deliveryDate" th:field="*{deliveryDate}">
+        <span class="error" th:if="${#fields.hasErrors('deliveryDate')}" th:errors="*{deliveryDate}">Delivery Date
+          Error</span>
       </div>
 
-      <button type="submit">Save Changes</button>
+      <button type="submit">Save Details</button>
 
     </form>
 
+
+    <!-- Tilauksen statuksen ja kuljettajan muuttaminen -->
+    <h3>Delivery Management</h3>
+    <p>Update the order status and assigned driver.</p>
+
+    <form th:action="@{/updateDelivery}" method="post">
+
+      <input type="hidden" name="orderId" th:value="${order.id}">
+
+      <div>
+        <label for="status">Status:</label>
+
+        <select id="status" name="status">
+          <option value="UNASSIGNED" th:selected="${order.status.name() == 'UNASSIGNED'}">Unassigned</option>
+          <option value="ASSIGNED" th:selected="${order.status.name() == 'ASSIGNED'}">Assigned</option>
+          <option value="IN_PROGRESS" th:selected="${order.status.name() == 'IN_PROGRESS'}">In Progress</option>
+          <option value="DELIVERED" th:selected="${order.status.name() == 'DELIVERED'}">Delivered</option>
+          <option value="FAILED_DELIVERY" th:selected="${order.status.name() == 'FAILED_DELIVERY'}">Failed Delivery
+          </option>
+          <option value="CANCELLED" th:selected="${order.status.name() == 'CANCELLED'}">Cancelled</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="userId">Driver:</label>
+
+        <select id="userId" name="userId">
+          <option value="" th:selected="${order.user == null}">Unassigned</option>
+
+          <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}"
+            th:selected="${order.user != null and order.user.id == user.id}">
+          </option>
+        </select>
+      </div>
+
+      <!-- Näytetään validointivirhe -->
+      <p class="error" th:if="${deliveryError}" th:text="${deliveryError}">
+      </p>
+
+      <button type="submit">Save Delivery</button>
+
+    </form>
+
+
+    <!-- Tilauksen poistaminen -->
     <h2>Delete Order</h2>
 
     <form th:action="@{/deleteOrder/{id}(id=${order.id})}" method="post">

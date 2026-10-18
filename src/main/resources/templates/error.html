@@ -1,26 +1,34 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-  <title>Error | Delivery Tracking</title>
-
+  <meta charset="UTF-8">
+  <title>Error | PawTrack</title>
   <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 
 <body>
 
-  <header>
-    <h1>Error | Delivery Tracking</h1>
-  </header>
+  <!-- Yhteinen header -->
+  <div th:replace="~{header :: header}"></div>
 
-  <main>
-    <h2>Error</h2>
+  <main th:with="errorCode=${status != null and status >= 400 and status <= 599 ? status : 500}">
 
-    <p th:text="${errorMessage}">An error occurred.</p>
+    <h2>Oops! Something went wrong 🐾</h2>
+    <p>Looks like a curious cat got into the system!</p>
 
-    <!-- Kotisivulle -->
-    <a th:href="@{/index}">Back to Home</a>
+    <!-- Virheviesti -->
+    <p th:text="${errorMessage ?: 'Something went wrong. Please try again.'}"></p>
+
+    <!-- HTTP Cats -->
+    <img th:src="|https://httpcats.com/${errorCode}.jpg|" alt="HTTP error cat"
+      style="max-width: 350px; width: 100%; border-radius: 8px; display: block; margin: 20px 0;">
+
+    <!-- Takaisin etusivulle -->
+    <a th:href="@{/index}" class="action-link">
+      <i class="bi bi-house-door"></i> Back to Home
+    </a>
+
   </main>
 
 </body>

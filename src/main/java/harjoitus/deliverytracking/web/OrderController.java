@@ -78,15 +78,15 @@ public class OrderController {
         return "orderList";
     }
 
-    @GetMapping("/modifyOrder/{id}")
-    public String modifyOrder(@PathVariable Long id, Model model) {
+    @GetMapping("/edit-order/{id}")
+    public String editOrder(@PathVariable Long id, Model model) {
         model.addAttribute("users", appUserRepository.findAll());
 
         Order order = orderRepository.findById(id).orElseThrow();
 
         model.addAttribute("order", order);
 
-        return "modifyOrder";
+        return "edit-order";
     }
 
     // Päivittää tilauksen perustiedot
@@ -99,7 +99,7 @@ public class OrderController {
         // Tarkistetaan validointivirheet
         if (result.hasErrors()) {
             model.addAttribute("users", appUserRepository.findAll());
-            return "modifyOrder";
+            return "edit-order";
         }
 
         Order existingOrder = orderRepository.findById(order.getId()).orElseThrow();
@@ -111,7 +111,7 @@ public class OrderController {
 
         orderRepository.save(existingOrder);
 
-        return "redirect:/modifyOrder/" + order.getId();
+        return "redirect:/edit-order/" + order.getId();
     }
 
     // Päivittää tilauksen statuksen ja kuljettajan
@@ -141,12 +141,12 @@ public class OrderController {
             model.addAttribute("users", appUserRepository.findAll());
             model.addAttribute("deliveryError", "Invalid status and driver combination");
 
-            return "modifyOrder";
+            return "edit-order";
         }
 
         orderRepository.save(order);
 
-        return "redirect:/modifyOrder/" + orderId;
+        return "redirect:/edit-order/" + orderId;
     }
 
     @PostMapping("/deleteOrder/{id}")

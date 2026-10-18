@@ -13,12 +13,12 @@ import harjoitus.deliverytracking.repository.AppUserRepository;
 import harjoitus.deliverytracking.repository.OrderRepository;
 
 @Controller
-public class DeliveryController {
+public class DriverController {
 
     private final OrderRepository orderRepository;
     private final AppUserRepository appUserRepository;
 
-    public DeliveryController(OrderRepository orderRepository, AppUserRepository appUserRepository) {
+    public DriverController(OrderRepository orderRepository, AppUserRepository appUserRepository) {
         this.orderRepository = orderRepository;
         this.appUserRepository = appUserRepository;
     }

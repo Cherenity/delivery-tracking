@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Assign Drivers | Delivery Tracking</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+  <header>
+    <h1>Assign Drivers</h1>
+    <p>Assign delivery orders to drivers.</p>
+  </header>
+
+  <main>
+
+    <h2>Unassigned Orders</h2>
+    <p>Select orders and assign them to a driver.</p>
+
+    <!-- Usean tilauksen määritys -->
+    <form th:action="@{/assignMultiple}" method="post">
+
+      <table>
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Order</th>
+            <th>Customer</th>
+            <th>Address</th>
+            <th>Delivery Date</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="order : ${orders}">
+            <td>
+              <input type="checkbox"
+                     name="orderIds"
+                     th:value="${order.id}">
+            </td>
+            <td th:text="${order.id}"></td>
+            <td th:text="${order.customer}"></td>
+            <td th:text="${order.address}"></td>
+            <td th:text="${order.deliveryDate}"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p th:if="${#lists.isEmpty(orders)}">
+        No unassigned orders.
+      </p>
+
+      <h3>Assign to Driver</h3>
+
+      <label for="userId">Driver:</label>
+
+      <select id="userId" name="userId" required>
+        <option value="">Select Driver</option>
+
+        <option th:each="user : ${users}"
+                th:value="${user.id}"
+                th:text="${user.username}">
+        </option>
+      </select>
+
+      <button type="submit">Assign Selected</button>
+
+    </form>
+
+    <p>
+      <a th:href="@{/orderList}">Back to Orders</a>
+    </p>
+
+  </main>
+
+</body>
+</html>

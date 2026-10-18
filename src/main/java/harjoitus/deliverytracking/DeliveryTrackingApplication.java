@@ -37,15 +37,16 @@ public class DeliveryTrackingApplication {
 			Order order2 = new Order(
 					"K-Market",
 					"Aleksanterinkatu 10",
-					LocalDate.now(),
-					Order.OrderStatus.ASSIGNED);
+					LocalDate.now()
+			);
 			orderRepository.save(order2);
 
 			Order order3 = new Order(
 					"Lidl",
 					"Hämeentie 20",
-					LocalDate.now(),
-					Order.OrderStatus.IN_PROGRESS);
+					LocalDate.now()
+			);
+			
 			orderRepository.save(order3);
 
 			AppUser user1 = new AppUser("user1", "NOT_CONFIGURED", "user1@example.com", "USER");

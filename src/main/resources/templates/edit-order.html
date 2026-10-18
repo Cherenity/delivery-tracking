@@ -103,10 +103,13 @@
 
     </form>
 
-    <p>
-      <a th:href="@{/orderList}">Back to Order List</a>
-    </p>
-
+    <!-- Takaisin tilauslistaan -->
+    <form th:action="@{/orders}" method="get" style="margin-top: 20px;">
+      <button type="submit">
+        <i class="bi bi-arrow-left"></i> Back to Orders
+      </button>
+    </form>
+    
   </main>
 
 </body>

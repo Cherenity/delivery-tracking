@@ -23,9 +23,8 @@ public class DriverController {
         this.appUserRepository = appUserRepository;
     }
 
-    // Näyttää kuljettajan toimitukset järjestyksessä
     // Näyttää kuljettajan tämän päivän toimitukset järjestyksessä
-    @GetMapping("/deliveryList/{userId}")
+    @GetMapping("/my-deliveries/{userId}")
     public String showDeliveries(@PathVariable Long userId, @RequestParam(defaultValue = "false") boolean started,
             Model model) {
 
@@ -48,11 +47,11 @@ public class DriverController {
 
         model.addAttribute("assignedCount", assignedCount);
 
-        return "deliveryList";
+        return "my-deliveries";
     }
 
     // Aloittaa kuljettajan päivän toimitukset
-    @PostMapping("/deliveryList/{userId}/start")
+    @PostMapping("/my-deliveries/{userId}/start")
     public String startDeliveries(@PathVariable Long userId) {
 
         // Haetaan kuljettajan tämän päivän tilaukset
@@ -67,11 +66,11 @@ public class DriverController {
             }
         }
 
-        return "redirect:/deliveryList/" + userId + "?started=true";
+        return "redirect:/my-deliveries/" + userId + "?started=true";
     }
 
     // Päivittää toimituksen tilan
-    @PostMapping("/deliveryList/{userId}/status")
+    @PostMapping("/my-deliveries/{userId}/status")
     public String updateStatus(@PathVariable Long userId,
             @RequestParam Long orderId,
             @RequestParam Order.OrderStatus status) {
@@ -100,7 +99,7 @@ public class DriverController {
         order.setStatus(status);
         orderRepository.save(order);
 
-        return "redirect:/deliveryList/" + userId;
+        return "redirect:/my-deliveries/" + userId;
     }
 
 }

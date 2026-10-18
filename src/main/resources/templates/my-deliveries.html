@@ -23,7 +23,7 @@
     </p>
     <br></br>
 
-    <form th:if="${assignedCount > 0}" th:action="@{/deliveryList/{userId}/start(userId=${userId})}" method="post">
+    <form th:if="${assignedCount > 0}" th:action="@{/my-deliveries/{userId}/start(userId=${userId})}" method="post">
 
       <button type="submit">Start Deliveries</button>
 
@@ -51,7 +51,7 @@
       <span th:text="${order.status}"></span>
 
       <!-- Toimituksen tilan päivittäminen -->
-      <form th:if="${order.status.name() != 'ASSIGNED'}" th:action="@{/deliveryList/{userId}/status(userId=${userId})}"
+      <form th:if="${order.status.name() != 'ASSIGNED'}" th:action="@{/my-deliveries/{userId}/status(userId=${userId})}"
         method="post">
 
         <input type="hidden" name="orderId" th:value="${order.id}">

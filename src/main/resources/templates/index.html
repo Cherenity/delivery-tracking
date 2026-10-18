@@ -19,14 +19,17 @@
 
     <!-- Adminin näkymä -->
     <section sec:authorize="hasRole('ADMIN')">
-
+      <div style="height: 8px;"></div>
+      
       <h3>Order Management</h3>
       <p>View, create and manage delivery orders.</p>
-      <a th:href="@{/orderList}" class="action-link">
-        <i class="bi bi-clipboard-check"></i> Manage Orders
-      </a>
 
-      <br></br>
+      <form th:action="@{/orders}" method="get">
+        <button type="submit">
+          <i class="bi bi-clipboard-check"></i> Manage Orders
+        </button>
+      </form>
+      <div style="height: 8px;"></div>
 
       <!-- Tämän päivän toimitustilastot -->
       <h3>Today's Delivery Overview</h3>

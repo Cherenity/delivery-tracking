@@ -20,7 +20,7 @@ import jakarta.validation.Validator;
 
 import org.springframework.web.bind.annotation.RequestParam;
 
-// http://localhost:8080/orderList
+// http://localhost:8080/orders
 
 @Controller
 public class OrderController {
@@ -35,7 +35,7 @@ public class OrderController {
         this.appUserRepository = appUserRepository;
     }
 
-    @GetMapping("/orderList")
+    @GetMapping("/orders")
     public String showOrders(Model model) {
 
         model.addAttribute("orders", orderRepository.findAll());
@@ -50,32 +50,32 @@ public class OrderController {
         model.addAttribute("today", today);
         model.addAttribute("users", appUserRepository.findAll());
 
-        return "orderList";
+        return "orders";
     }
 
-    @PostMapping("/orderList")
+    @PostMapping("/orders")
     public String addOrder(@Valid @ModelAttribute("order") Order order, BindingResult result, Model model) {
         if (result.hasErrors()) {
             model.addAttribute("orders", orderRepository.findAll());
             model.addAttribute("users", appUserRepository.findAll());
             model.addAttribute("today", LocalDate.now());
-            return "orderList";
+            return "orders";
         }
 
         orderRepository.save(order);
 
-        return "redirect:/orderList";
+        return "redirect:/orders";
     }
 
     // Pohditaan vielä
-    @GetMapping("/orderList/{userId}")
+    @GetMapping("/orders/{userId}")
     public String showDriverOrders(@PathVariable Long userId, Model model) {
 
         model.addAttribute("orders", orderRepository.findByUserId(userId));
         model.addAttribute("order", new Order());
         model.addAttribute("users", appUserRepository.findAll());
 
-        return "orderList";
+        return "orders";
     }
 
     @GetMapping("/edit-order/{id}")
@@ -154,7 +154,7 @@ public class OrderController {
 
         orderRepository.deleteById(id);
 
-        return "redirect:/orderList";
+        return "redirect:/orders";
     }
 
     // KULJETTAJIEN MÄÄRITYKSET (SAA LISÄTÄ USEAMPIA)

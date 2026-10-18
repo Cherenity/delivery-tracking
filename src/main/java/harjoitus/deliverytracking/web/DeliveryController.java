@@ -78,7 +78,7 @@ public class DeliveryController {
 
         Order order = orderRepository.findById(orderId).orElseThrow();
 
-        // Tarkistetaan, että tilaus kuuluu kuljettajalle
+        // Tarkistetaan, että tilaus kuuluu kuljettajalle (Ehkä ohjaus error sivulle pohditaan)
         if (order.getUser() == null ||
                 !order.getUser().getId().equals(userId)) {
             throw new IllegalArgumentException("Invalid driver");

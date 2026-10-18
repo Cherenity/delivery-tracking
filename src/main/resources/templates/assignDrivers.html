@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
   <meta charset="UTF-8">
@@ -10,11 +9,9 @@
 
 <body>
 
-  <header>
-    <h1>Assign Drivers</h1>
-    <p>Assign delivery orders to drivers.</p>
-  </header>
-
+  <!-- Yhteinen header -->
+  <div th:replace="~{header :: header}"></div>
+  
   <main>
 
     <h2>Unassigned Orders</h2>
@@ -37,9 +34,7 @@
         <tbody>
           <tr th:each="order : ${orders}">
             <td>
-              <input type="checkbox"
-                     name="orderIds"
-                     th:value="${order.id}">
+              <input type="checkbox" name="orderIds" th:value="${order.id}">
             </td>
             <td th:text="${order.id}"></td>
             <td th:text="${order.customer}"></td>
@@ -60,9 +55,7 @@
       <select id="userId" name="userId" required>
         <option value="">Select Driver</option>
 
-        <option th:each="user : ${users}"
-                th:value="${user.id}"
-                th:text="${user.username}">
+        <option th:each="user : ${users}" th:value="${user.id}" th:text="${user.username}">
         </option>
       </select>
 
@@ -77,4 +70,5 @@
   </main>
 
 </body>
+
 </html>

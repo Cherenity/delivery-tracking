@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<body>
+
+  <header th:fragment="header" class="app-header">
+
+    <h1>
+      <a th:href="@{/index}" class="header-link">
+        <i class="bi bi-box-seam header-icon"></i>
+        PawTrack - Delivery Tracking
+      </a>
+    </h1>
+
+    <p class="header-slogan">Purrfect deliveries, one paw at a time! 🐾</p>
+
+    <!-- Logout -->
+    <form th:action="@{/logout}" method="post" sec:authorize="isAuthenticated()" class="logout-form">
+
+      <button type="submit">
+        <i class="bi bi-box-arrow-right"></i> Logout
+      </button>
+
+    </form>
+
+  </header>
+
+</body>
+
+</html>

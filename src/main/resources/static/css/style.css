@@ -6,17 +6,17 @@
 
 /* VÄRIT - Muuta sivuston värejä tästä */
 :root {
-    --body-bg: #7e9aff;
-    --main-bg: #e3e5f0;
-    --header-bg: #171f4d;
-    --card-bg: #f4f4f4;
+    --body-bg: #524242;
+    --main-bg: #d6c9cb;
+    --header-bg: #201313;
+    --card-bg: #fffafa;
 
     --text-color: #222;
     --link-color: #0066cc;
     --border-color: #ddd;
 
-    --button-bg: #f3c4ff;
-    --button-hover: #d0d0d0;
+    --button-bg: #645252;
+    --button-hover: #564949;
 
     --error-color: #dc356f;
     --success-color: #198754;
@@ -72,6 +72,8 @@ a:hover {
 
 /* Painikkeet */
 button {
+    color: #f4f4f4;
+    font-size:medium;
     padding: 10px 16px;
     background-color: var(--button-bg);
     border: none;

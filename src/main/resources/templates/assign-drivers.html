@@ -14,8 +14,8 @@
 
   <main>
 
-    <h2>Unassigned Orders</h2>
-    <p>Select orders and assign them to a driver.</p>
+    <h2><i class="bi bi-truck" style="margin-right: 10px;"></i> Assign Deliveries</h2>
+    <p>Select unassigned orders and assign them to a driver.</p>
 
     <!-- Usean tilauksen määritys -->
     <form th:action="@{/assignMultiple}" method="post">
@@ -64,7 +64,9 @@
         </option>
       </select>
 
-      <button type="submit">Assign Selected</button>
+      <button type="submit" style="margin-bottom: 20px;">
+        <i class="bi bi-person-check" style="margin-right: 8px;"></i> Assign Selected
+      </button>
 
     </form>
 

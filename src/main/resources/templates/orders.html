@@ -47,7 +47,9 @@
         </div>
 
 
-        <button type="submit">Add Order</button>
+        <button type="submit">
+          <i class="bi bi-plus-circle" style="margin-right: 15px;"></i> Add Order
+        </button>
 
       </form>
 
@@ -55,7 +57,11 @@
 
       <p>View and manage delivery orders.</p>
 
-      <a th:href="@{/assign-drivers}">Assign Drivers</a>
+      <form th:action="@{/assign-drivers}" method="get">
+        <button type="submit">
+          <i class="bi bi-person-plus" style="margin-right: 10px;"></i> Assign Drivers
+        </button>
+      </form>
 
       <table>
 

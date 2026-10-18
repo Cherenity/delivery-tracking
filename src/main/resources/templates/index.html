@@ -16,11 +16,11 @@
 
   <main>
 
-    <h2>Welcome!</h2>
+    <h2>Welcome, <span sec:authentication="name"></span>!</h2>
     <p>Manage orders and track deliveries in one place.</p>
 
     <!-- Adminin näkymä -->
-    <section sec:authorize="hasAuthority('ADMIN')">
+    <section sec:authorize="hasRole('ADMIN')">
 
       <h3>Order Management</h3>
       <p>View, create and manage delivery orders.</p>
@@ -57,7 +57,7 @@
     </section>
 
     <!-- Kuljettajan näkymä -->
-    <section sec:authorize="hasAuthority('USER')">
+    <section sec:authorize="hasRole('USER')">
 
       <h3>My Deliveries</h3>
       <p>View your assigned deliveries and update their status.</p>

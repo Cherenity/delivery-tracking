@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import harjoitus.deliverytracking.domain.Order;
 import harjoitus.deliverytracking.repository.OrderRepository;
@@ -24,36 +25,39 @@ public class DeliveryTrackingApplication {
 
 	@Bean
 	// Demodataa lisätty
-	public CommandLineRunner demoOrderData(OrderRepository orderRepository, AppUserRepository userRepository) {
+	public CommandLineRunner demoOrderData(OrderRepository orderRepository, AppUserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
 		return (args) -> {
-
+			
 			Order order1 = new Order(
-					"Prisma",
-					"Mannerheimintie 1",
-					LocalDate.now()
-			);
+					"Cat Food Express - Musti ja Mirri Kamppi",
+					"Urho Kekkosen katu 1, 00100 Helsinki",
+					LocalDate.now());
 			orderRepository.save(order1);
 
 			Order order2 = new Order(
-					"K-Market",
-					"Aleksanterinkatu 10",
-					LocalDate.now()
-			);
+							"Purrfect Delivery - Musti ja Mirri Hakaniemi",
+							"Siltasaarenkatu 12, 00530 Helsinki",
+							LocalDate.now());
 			orderRepository.save(order2);
 
 			Order order3 = new Order(
-					"Lidl",
-					"Hämeentie 20",
-					LocalDate.now()
-			);
-			
+							"Meow Supplies - Musti ja Mirri Ruoholahti",
+							"Itämerenkatu 21, 00180 Helsinki",
+							LocalDate.now());
 			orderRepository.save(order3);
 
-			AppUser user1 = new AppUser("user1", "NOT_CONFIGURED", "user1@example.com", "USER");
-			AppUser user2 = new AppUser("user2", "NOT_CONFIGURED", "user2@example.com", "USER");
+
+			// Kuljettajat
+			AppUser user1 = new AppUser("ParcelPaws", passwordEncoder.encode("parcel123"), "parcel@example.com", "USER");
+			AppUser user2 = new AppUser("PurrExpress", passwordEncoder.encode("express123"), "express@example.com", "USER");
+
+			// Admin
+			AppUser admin = new AppUser("DispatchCat", passwordEncoder.encode("dispatch123"), "dispatch@example.com",
+					"ADMIN");
 
 			userRepository.save(user1);
 			userRepository.save(user2);
+			userRepository.save(admin);
 
 		};
 	}

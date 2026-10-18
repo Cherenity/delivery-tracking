@@ -37,4 +37,11 @@ public class HomeController {
 
     return "index";
   }
+
+  // Näyttää kirjautumissivun
+  @GetMapping("/login")
+  public String login() {
+    return "login";
+  }
+
 }

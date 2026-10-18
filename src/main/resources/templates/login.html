@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Delivery Tracking</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+  <header>
+    <h1>Delivery Tracking</h1>
+  </header>
+
+  <main>
+    <h2>Login</h2>
+    <p>Sign in to manage your deliveries.</p>
+
+    <p class="error" th:if="${param.error}">
+      Invalid username or password.
+    </p>
+
+    <p th:if="${param.logout}">
+      You have been logged out.
+    </p>
+
+    <form th:action="@{/login}" method="post">
+
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+      </div>
+
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+      </div>
+
+      <!-- Show password -->
+      <label style="display: inline-flex; align-items: center; gap: 8px; width: auto; cursor: pointer;">
+        <input type="checkbox" id="showPassword" style="width: auto; margin: 0;">
+        Show password
+      </label>
+      <br></br>
+
+      <button type="submit">Login</button>
+
+    </form>
+  </main>
+
+  <script>
+    const showPassword = document.getElementById("showPassword");
+    const password = document.getElementById("password");
+
+    showPassword.addEventListener("change", function () {
+
+      if (this.checked) {
+        password.type = "text";
+      } else {
+        password.type = "password";
+      }
+
+    });
+    
+  </script>
+
+</body>
+
+</html>

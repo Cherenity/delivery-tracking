@@ -1,4 +1,3 @@
-
 package harjoitus.deliverytracking.security;
 
 import org.springframework.security.core.authority.AuthorityUtils;

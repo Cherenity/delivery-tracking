@@ -1,4 +1,3 @@
-
 package harjoitus.deliverytracking.exception;
 
 import java.util.NoSuchElementException;

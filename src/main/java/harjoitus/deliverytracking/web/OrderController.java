@@ -40,23 +40,26 @@ public class OrderController {
     @GetMapping("/orders")
     public String showOrders(Model model) {
 
-        model.addAttribute("orders", orderRepository.findAll());
-        // Yksi tyhjä Order-olio lomaketta varten
-
-        Order order = new Order();
         LocalDate today = LocalDate.now();
-
-        order.setDeliveryDate(today);
-
-        model.addAttribute("order", order);
         model.addAttribute("today", today);
+
+        // Yksi tyhjä Order-olio lomaketta varten
+        Order order = new Order();
+        order.setDeliveryDate(today);
+        model.addAttribute("order", order);
+
+        model.addAttribute("orders", orderRepository.findAll());
         model.addAttribute("users", appUserRepository.findAll());
 
         return "orders";
     }
 
     @PostMapping("/orders")
-    public String addOrder(@Valid @ModelAttribute("order") Order order, BindingResult result, Model model) {
+    public String addOrder(
+            @Valid @ModelAttribute("order") Order order,
+            BindingResult result,
+            Model model) {
+
         if (result.hasErrors()) {
             model.addAttribute("orders", orderRepository.findAll());
             model.addAttribute("users", appUserRepository.findAll());
@@ -69,23 +72,12 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-    // Pohditaan vielä
-    @GetMapping("/orders/{userId}")
-    public String showDriverOrders(@PathVariable Long userId, Model model) {
-
-        model.addAttribute("orders", orderRepository.findByUserId(userId));
-        model.addAttribute("order", new Order());
-        model.addAttribute("users", appUserRepository.findAll());
-
-        return "orders";
-    }
-
     @GetMapping("/editOrder/{id}")
     public String editOrder(@PathVariable Long id, Model model) {
+
         model.addAttribute("users", appUserRepository.findAll());
 
         Order order = orderRepository.findById(id).orElseThrow();
-
         model.addAttribute("order", order);
 
         return "edit-order";
@@ -101,12 +93,11 @@ public class OrderController {
         // Tarkistetaan validointivirheet
         if (result.hasErrors()) {
             model.addAttribute("users", appUserRepository.findAll());
-
             return "edit-order";
         }
 
         Order existingOrder = orderRepository.findById(order.getId())
-            .orElseThrow(() -> new NoSuchElementException("Order not found"));
+                .orElseThrow(() -> new NoSuchElementException("Order not found"));
 
         // Päivitetään perustiedot
         existingOrder.setCustomer(order.getCustomer());
@@ -164,7 +155,7 @@ public class OrderController {
     // KULJETTAJIEN MÄÄRITYKSET (SAA LISÄTÄ USEAMPIA)
 
     /// Näyttää kuljettajien määrityssivun
-    @GetMapping("/assign-drivers")
+    @GetMapping("/assignDrivers")
     public String showAssignDrivers(Model model) {
 
         model.addAttribute("orders",
@@ -204,7 +195,7 @@ public class OrderController {
             orderRepository.save(order);
         }
 
-        return "redirect:/assign-drivers";
+        return "redirect:/assignDrivers";
     }
 
 }

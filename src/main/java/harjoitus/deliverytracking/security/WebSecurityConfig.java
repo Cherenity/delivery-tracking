@@ -24,8 +24,8 @@ public class WebSecurityConfig {
     http
         .authorizeHttpRequests(authorize -> authorize
             .requestMatchers("/css/**", "/login").permitAll()
-            .requestMatchers("/orders/**", "/edit-order/**",
-                "/assign-drivers", "/assignMultiple",
+            .requestMatchers("/orders/**", "/editOrder/**",
+                "/assignDrivers", "/assignMultiple",
                 "/updateOrder", "/updateDelivery",
                 "/deleteOrder/**")
             .hasRole("ADMIN")

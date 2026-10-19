@@ -24,7 +24,8 @@ public class DriverController {
         this.appUserRepository = appUserRepository;
     }
 
-    // Näyttää kuljettajan tämän päivän toimitukset järjestyksessä
+    // Näyttää kuljettajan tämän päivän toimitukset
+    
     @GetMapping("/myDeliveries/{userId}")
     public String showDeliveries(@PathVariable Long userId, Model model) {
 

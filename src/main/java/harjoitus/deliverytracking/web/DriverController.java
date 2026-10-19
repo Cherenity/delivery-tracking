@@ -22,9 +22,10 @@ public class DriverController {
         this.orderRepository = orderRepository;
         this.appUserRepository = appUserRepository;
     }
-
+    
+    //POOOOOOOOOOOOOOOOOOOOOOOOHDIIIIIIIIIIII KUN POISTIN TOIMINNON SIIRTÄÄ YLÖS ALES JA LISÄSIN MYÖS BULK LISÄYKSEN 
     // Näyttää kuljettajan tämän päivän toimitukset järjestyksessä
-    @GetMapping("/my-deliveries/{userId}")
+    @GetMapping("/myDeliveries/{userId}")
     public String showDeliveries(@PathVariable Long userId, @RequestParam(defaultValue = "false") boolean started,
             Model model) {
 
@@ -51,7 +52,7 @@ public class DriverController {
     }
 
     // Aloittaa kuljettajan päivän toimitukset
-    @PostMapping("/my-deliveries/{userId}/start")
+    @PostMapping("/myDeliveries/{userId}/start")
     public String startDeliveries(@PathVariable Long userId) {
 
         // Haetaan kuljettajan tämän päivän tilaukset
@@ -66,11 +67,11 @@ public class DriverController {
             }
         }
 
-        return "redirect:/my-deliveries/" + userId + "?started=true";
+        return "redirect:/myDeliveries/" + userId + "?started=true";
     }
 
     // Päivittää toimituksen tilan
-    @PostMapping("/my-deliveries/{userId}/status")
+    @PostMapping("/myDeliveries/{userId}/status")
     public String updateStatus(@PathVariable Long userId,
             @RequestParam Long orderId,
             @RequestParam Order.OrderStatus status) {
@@ -99,7 +100,7 @@ public class DriverController {
         order.setStatus(status);
         orderRepository.save(order);
 
-        return "redirect:/my-deliveries/" + userId;
+        return "redirect:/myDeliveries/" + userId;
     }
 
 }

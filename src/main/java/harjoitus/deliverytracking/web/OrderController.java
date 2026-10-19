@@ -161,7 +161,7 @@ public class OrderController {
         model.addAttribute("orders",
                 orderRepository.findByStatus(Order.OrderStatus.UNASSIGNED));
 
-        model.addAttribute("users", appUserRepository.findAll());
+        model.addAttribute("users", appUserRepository.findByRole("USER"));
 
         return "assign-drivers";
     }

@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -117,15 +118,21 @@ public class OrderController {
             @RequestParam(required = false) Long userId,
             Model model) {
 
-        Order order = orderRepository.findById(orderId).orElseThrow();
+        Order order = orderRepository
+                .findById(orderId)
+                .orElseThrow(() -> new NoSuchElementException("Order not found with ID: " + orderId));
 
         // Päivitetään status ja kuljettaja
         order.setStatus(status);
 
         AppUser user = null;
+
         if (userId != null) {
-            user = appUserRepository.findById(userId).orElseThrow();
+            user = appUserRepository
+                    .findById(userId)
+                    .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + userId));
         }
+
         order.setUser(user);
 
         // Tarkistetaan @AssertTrue-validointi
@@ -144,6 +151,7 @@ public class OrderController {
         return "redirect:/editOrder/" + orderId;
     }
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/deleteOrder/{id}")
     public String deleteOrder(@PathVariable Long id) {
 

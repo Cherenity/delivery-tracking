@@ -87,7 +87,7 @@
               <td th:text="${order.status}"></td>
               <td th:text="${order.user != null ? order.user.username : 'Unassigned'}"></td>
               <td>
-                <form th:action="@{/edit-order/{id}(id=${order.id})}" method="get">
+                <form th:action="@{/editOrder/{id}(id=${order.id})}" method="get">
                   <button type="submit" style="padding: 5px 10px; font-size: 13px;">
                     <i class="bi bi-pencil-square"></i> Edit
                   </button>

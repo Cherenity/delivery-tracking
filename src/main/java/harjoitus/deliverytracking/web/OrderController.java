@@ -4,6 +4,8 @@ import harjoitus.deliverytracking.repository.AppUserRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,7 +31,7 @@ public class OrderController {
     private final OrderRepository orderRepository;
     private final Validator validator;
 
-    public OrderController(OrderRepository orderRepository, AppUserRepository appUserRepository,  Validator validator) {
+    public OrderController(OrderRepository orderRepository, AppUserRepository appUserRepository, Validator validator) {
         this.validator = validator;
         this.orderRepository = orderRepository;
         this.appUserRepository = appUserRepository;
@@ -78,7 +80,7 @@ public class OrderController {
         return "orders";
     }
 
-    @GetMapping("/edit-order/{id}")
+    @GetMapping("/editOrder/{id}")
     public String editOrder(@PathVariable Long id, Model model) {
         model.addAttribute("users", appUserRepository.findAll());
 
@@ -99,10 +101,12 @@ public class OrderController {
         // Tarkistetaan validointivirheet
         if (result.hasErrors()) {
             model.addAttribute("users", appUserRepository.findAll());
+
             return "edit-order";
         }
 
-        Order existingOrder = orderRepository.findById(order.getId()).orElseThrow();
+        Order existingOrder = orderRepository.findById(order.getId())
+            .orElseThrow(() -> new NoSuchElementException("Order not found"));
 
         // Päivitetään perustiedot
         existingOrder.setCustomer(order.getCustomer());
@@ -111,7 +115,7 @@ public class OrderController {
 
         orderRepository.save(existingOrder);
 
-        return "redirect:/edit-order/" + order.getId();
+        return "redirect:/editOrder/" + order.getId();
     }
 
     // Päivittää tilauksen statuksen ja kuljettajan
@@ -146,7 +150,7 @@ public class OrderController {
 
         orderRepository.save(order);
 
-        return "redirect:/edit-order/" + orderId;
+        return "redirect:/editOrder/" + orderId;
     }
 
     @PostMapping("/deleteOrder/{id}")

@@ -23,31 +23,26 @@ public class DriverController {
         this.orderRepository = orderRepository;
         this.appUserRepository = appUserRepository;
     }
-    
-    //POOOOOOOOOOOOOOOOOOOOOOOOHDIIIIIIIIIIII KUN POISTIN TOIMINNON SIIRTÄÄ YLÖS ALES JA LISÄSIN MYÖS BULK LISÄYKSEN 
+
+
     // Näyttää kuljettajan tämän päivän toimitukset järjestyksessä
     @GetMapping("/myDeliveries/{userId}")
-    public String showDeliveries(@PathVariable Long userId, @RequestParam(defaultValue = "false") boolean started,
-            Model model) {
-
-        AppUser user = appUserRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("Driver not found"));
-
-        model.addAttribute("username", user.getUsername());
+    public String showDeliveries(@PathVariable Long userId, Model model) {
 
         LocalDate today = LocalDate.now();
-
+        
         model.addAttribute("today", today);
+        model.addAttribute("orders", orderRepository
+                .findByUserIdAndDeliveryDate(userId, today));
 
-        model.addAttribute("orders",
-                orderRepository.findByUserIdAndDeliveryDateOrderByDeliveryOrderAscIdAsc(userId, today));
+        AppUser user = appUserRepository.findById(userId)
+                .orElseThrow(() -> new NoSuchElementException("Driver not found"));
+        model.addAttribute("username", user.getUsername());
 
         model.addAttribute("userId", userId);
-        model.addAttribute("started", started);
 
         // tilausten lkm
-        long assignedCount = orderRepository.countByUserIdAndDeliveryDateAndStatus(userId, today,
-                Order.OrderStatus.ASSIGNED);
-
+        long assignedCount = orderRepository.countByUserIdAndDeliveryDateAndStatus(userId, today, Order.OrderStatus.ASSIGNED);
         model.addAttribute("assignedCount", assignedCount);
 
         return "my-deliveries";
@@ -56,10 +51,11 @@ public class DriverController {
     // Aloittaa kuljettajan päivän toimitukset
     @PostMapping("/myDeliveries/{userId}/start")
     public String startDeliveries(@PathVariable Long userId) {
+        LocalDate today = LocalDate.now();
 
         // Haetaan kuljettajan tämän päivän tilaukset
-        List<Order> orders = orderRepository.findByUserIdAndDeliveryDateOrderByDeliveryOrderAscIdAsc(userId,
-                LocalDate.now());
+        List<Order> orders = orderRepository
+                .findByUserIdAndDeliveryDate(userId, today);
 
         // Muutetaan tila IN_PROGRESS
         for (Order order : orders) {
@@ -68,8 +64,7 @@ public class DriverController {
                 orderRepository.save(order);
             }
         }
-
-        return "redirect:/myDeliveries/" + userId + "?started=true";
+        return "redirect:/myDeliveries/" + userId;
     }
 
     // Päivittää toimituksen tilan
@@ -80,7 +75,8 @@ public class DriverController {
 
         Order order = orderRepository.findById(orderId).orElseThrow();
 
-        // Tarkistetaan, että tilaus kuuluu kuljettajalle (Ehkä ohjaus error sivulle pohditaan)
+        // Tarkistetaan, että tilaus kuuluu kuljettajalle (Ehkä ohjaus error sivulle
+        // pohditaan)
         if (order.getUser() == null ||
                 !order.getUser().getId().equals(userId)) {
             throw new IllegalArgumentException("Invalid driver");

@@ -1,6 +1,7 @@
 package harjoitus.deliverytracking.web;
 
 import java.time.LocalDate;
+import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -49,6 +50,14 @@ public class HomeController {
   @GetMapping("/login")
   public String login() {
     return "login";
+  }
+
+  @GetMapping("/testError")
+  public String testError() {
+
+    // throw new IllegalArgumentException("This is a test error (400)");
+
+    throw new NoSuchElementException("Driver not found (404)");
   }
 
 }

@@ -2,6 +2,7 @@ package harjoitus.deliverytracking.web;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +30,8 @@ public class DriverController {
     public String showDeliveries(@PathVariable Long userId, @RequestParam(defaultValue = "false") boolean started,
             Model model) {
 
-        AppUser user = appUserRepository.findById(userId).orElseThrow();
+        AppUser user = appUserRepository.findById(userId).orElseThrow(() -> new NoSuchElementException("Driver not found"));
+
         model.addAttribute("username", user.getUsername());
 
         LocalDate today = LocalDate.now();

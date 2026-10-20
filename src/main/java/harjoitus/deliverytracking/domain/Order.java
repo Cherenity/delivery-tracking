@@ -87,14 +87,6 @@ public class Order {
   public Order() {
   }
 
-  // uudet tilaukset aina ilman statusta... public Order(String customer, String
-  // address, LocalDate deliveryDate, OrderStatus status) {
-  // this.customer = customer;
-  // this.address = address;
-  // this.deliveryDate = deliveryDate;
-  // this.status = status;
-  // }
-
   public Order(String customer, String address, LocalDate deliveryDate) {
     this.customer = customer;
     this.address = address;

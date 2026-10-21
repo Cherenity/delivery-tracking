@@ -1,6 +1,7 @@
 package harjoitus.deliverytracking.domain;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -81,9 +82,14 @@ public class Order {
   @JoinColumn(name = "user_id")
   private AppUser user;
 
-  // Tätä ei nyt käytetä, jatkokehitystä varten mikäli halutaan voida järjestää tilauksia toimitusjärjestyksen mukaan.
+  // Tätä ei nyt käytetä, jatkokehitystä varten mikäli halutaan voida järjestää
+  // tilauksia toimitusjärjestyksen mukaan.
   @Column(name = "delivery_order")
   private Integer deliveryOrder;
+
+  // Toimituksen valmistumisaika
+  @Column(name = "completed_at")
+  private LocalDateTime completedAt;
 
   public Order() {
   }
@@ -148,5 +154,13 @@ public class Order {
 
   public void setDeliveryOrder(Integer deliveryOrder) {
     this.deliveryOrder = deliveryOrder;
+  }
+
+  public LocalDateTime getCompletedAt() {
+    return completedAt;
+  }
+
+  public void setCompletedAt(LocalDateTime completedAt) {
+    this.completedAt = completedAt;
   }
 }

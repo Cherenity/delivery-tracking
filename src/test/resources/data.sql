@@ -1,4 +1,3 @@
-
 -- Testidata H2-tietokantaan
 
 -- Käyttäjät

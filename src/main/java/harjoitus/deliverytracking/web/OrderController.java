@@ -151,7 +151,7 @@ public class OrderController {
         return "redirect:/editOrder/" + orderId;
     }
 
-    @PreAuthorize("hasAuthority('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/deleteOrder/{id}")
     public String deleteOrder(@PathVariable Long id) {
 

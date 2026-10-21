@@ -30,12 +30,13 @@ public class DeliveryTrackingApplication {
 	public CommandLineRunner demoOrderData(OrderRepository orderRepository, AppUserRepository userRepository,
 			BCryptPasswordEncoder passwordEncoder) {
 		return (args) -> {
-
-			// // Lisätään demodata vain, jos käyttäjiä ei vielä ole
-			// // CommandLineRunner käyttää sovellukselle määriteltyä tietokantaa
-			// if (userRepository.count() > 0) {
-			// 	return;
-			// }
+			
+			// Tyhjennetään vanhat tiedot ennen demodatan lisäämistä
+			// CommandLineRunner käyttää sovellukselle määriteltyä tietokantaa
+			if (userRepository.count() > 0 || orderRepository.count() > 0) {
+				orderRepository.deleteAll();
+				userRepository.deleteAll();
+			}
 
 			Order order1 = new Order(
 					"Cat Food Express - Musti ja Mirri Kamppi",

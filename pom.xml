@@ -93,12 +93,12 @@
 			<optional>true</optional>
 		</dependency>
 
-		<!-- Thymeleaf testit -->
-		<dependency>
+		<!-- Thymeleaf testit // Ei käytetty -->
+		<!-- <dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf-test</artifactId>
 			<scope>test</scope>
-		</dependency>
+		</dependency> -->
 
 		<!-- Spring MVC testit -->
 		<dependency>

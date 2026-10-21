@@ -15,8 +15,12 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
         // tiettyyn käyttäjään (userId)
         List<Order> findByUserId(Long userId);
 
-        //Driver Controller:
+        // Driver Controller:
         List<Order> findByUserIdAndDeliveryDate(Long userId, LocalDate deliveryDate);
+
+        // Hakee kuljettajan tietyn päivän toimitukset ID:n mukaan järjestettynä
+        List<Order> findByUserIdAndDeliveryDateOrderByIdAsc(
+                        Long userId, LocalDate deliveryDate);
 
         // Laskee kuljettajan tietyn päivän tilaukset annetun tilan perusteella
         int countByUserIdAndDeliveryDateAndStatus(Long userId, LocalDate deliveryDate, Order.OrderStatus status);
@@ -27,7 +31,7 @@ public interface OrderRepository extends CrudRepository<Order, Long> {
 
         // Laskee tietyn päivän tilaukset annetun statuksen perusteella
         int countByDeliveryDateAndStatus(LocalDate deliveryDate, Order.OrderStatus status);
-        
+
         // Order Controller:
         List<Order> findByStatus(Order.OrderStatus status);
 

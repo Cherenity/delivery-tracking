@@ -81,6 +81,7 @@ public class Order {
   @JoinColumn(name = "user_id")
   private AppUser user;
 
+  // Tätä ei nyt käytetä, jatkokehitystä varten mikäli halutaan voida järjestää tilauksia toimitusjärjestyksen mukaan.
   @Column(name = "delivery_order")
   private Integer deliveryOrder;
 

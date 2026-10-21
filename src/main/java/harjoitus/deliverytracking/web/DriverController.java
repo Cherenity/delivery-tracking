@@ -1,6 +1,7 @@
 package harjoitus.deliverytracking.web;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -24,15 +25,17 @@ public class DriverController {
         this.appUserRepository = appUserRepository;
     }
 
-    // Näyttää kuljettajan tämän päivän toimitukset  
+    // Näyttää kuljettajan tämän päivän toimitukset
     @GetMapping("/myDeliveries/{userId}")
     public String showDeliveries(@PathVariable Long userId, Model model) {
 
         LocalDate today = LocalDate.now();
 
         model.addAttribute("today", today);
+        // Näytetään kuljettajan tämän päivän toimitukset ID-järjestyksessä
+        // Toimituksen tilan muuttaminen ei vaikuta järjestykseen
         model.addAttribute("orders", orderRepository
-                .findByUserIdAndDeliveryDate(userId, today));
+                .findByUserIdAndDeliveryDateOrderByIdAsc(userId, today));
 
         AppUser user = appUserRepository
                 .findById(userId)
@@ -95,6 +98,8 @@ public class DriverController {
         }
 
         order.setStatus(status);
+        order.setCompletedAt(LocalDateTime.now());
+
         orderRepository.save(order);
 
         return "redirect:/myDeliveries/" + userId;

@@ -1,5 +1,7 @@
 package harjoitus.deliverytracking.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,6 +23,9 @@ public class AppUser {
   private String username;
 
   @Column(name = "password", nullable = false)
+  // Estää salasanatiivisteen näkymisen REST-rajapinnan JSON-vastauksissa
+  // Menee sisään, mutta ei ulos
+  @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
   private String passwordHash;
 
   @Column(name = "email", nullable = false, unique = true)

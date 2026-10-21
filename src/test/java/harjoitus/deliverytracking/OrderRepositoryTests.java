@@ -43,5 +43,31 @@ public class OrderRepositoryTests {
     assertThat(orders).hasSize(5);
   }
 
-  
+  // Testaa tilauksen poistamista tietokannasta
+  @Test
+  @Transactional
+  public void deleteOrder() {
+
+    Order order = new Order(
+        "Musti ja Mirri Porvoo",
+        "Käpäläkuja 7, 06100 Porvoo",
+        LocalDate.now());
+
+    orderRepository.save(order);
+
+    Long orderId = order.getId();
+
+    orderRepository.deleteById(orderId);
+
+    assertThat(orderRepository.existsById(orderId)).isFalse();
+  }
+
+  // Testaa tietylle kuljettajalle määritettyjen tilausten hakemista
+  @Test
+  public void findOrdersByUserId() {
+    var orders = orderRepository.findByUserId(2L);
+
+    assertThat(orders).hasSize(3);
+  }
+
 }

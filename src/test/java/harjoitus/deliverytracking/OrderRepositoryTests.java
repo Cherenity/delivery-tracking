@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.transaction.annotation.Transactional;
 
 import harjoitus.deliverytracking.domain.Order;
 import harjoitus.deliverytracking.repository.OrderRepository;
@@ -21,13 +22,12 @@ public class OrderRepositoryTests {
 
   // Testaa uuden tilauksen tallentamista tietokantaan
   @Test
+  @Transactional
   public void createNewOrder() {
     Order order = new Order(
-        "MeowParcel",
-        "Länsituuli 5, 02100 Espoo",
+        "Musti ja Mirri Espoo Tapiola",
+        "Länsituulentie 12, 02100 Espoo",
         LocalDate.now());
-
-    order.setDeliveryOrder(1);
 
     orderRepository.save(order);
 
@@ -36,9 +36,12 @@ public class OrderRepositoryTests {
 
   // Testaa kaikkien tilausten hakemista tietokannasta
   @Test
+  @Transactional
   public void findAllOrders() {
     Iterable<Order> orders = orderRepository.findAll();
 
     assertThat(orders).hasSize(5);
   }
+
+  
 }

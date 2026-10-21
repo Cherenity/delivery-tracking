@@ -20,7 +20,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "orderTable")
 
 public class Order {
   public enum OrderStatus {

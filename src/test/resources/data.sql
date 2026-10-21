@@ -9,7 +9,7 @@ VALUES
     ('driver2', '$2a$06$3jYRJrg0ghaaypjZ/.g4SethoeA51ph3UD4kZi9oPkeMTpjKU5uo6', 'driver2@pawtrack.fi', 'ROLE_USER');
 
 -- Toimitustilaukset
-INSERT INTO orders (customer, address, delivery_date, status, delivery_order, user_id)
+INSERT INTO order_table (customer, address, delivery_date, status, delivery_order, user_id)
 VALUES
     ('Mocca & Tupla Pet Shop', 'Kissankuja 5, Helsinki', CURRENT_DATE, 'ASSIGNED', 1, 2),
     ('Happy Paws', 'Tassutie 12, Espoo', CURRENT_DATE, 'ASSIGNED', 2, 2),

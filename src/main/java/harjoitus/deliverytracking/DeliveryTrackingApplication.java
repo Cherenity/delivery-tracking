@@ -31,11 +31,11 @@ public class DeliveryTrackingApplication {
 			BCryptPasswordEncoder passwordEncoder) {
 		return (args) -> {
 
-			// Lisätään demodata vain, jos käyttäjiä ei vielä ole
-			// CommandLineRunner käyttää sovellukselle määriteltyä tietokantaa
-			if (userRepository.count() > 0) {
-				return;
-			}
+			// // Lisätään demodata vain, jos käyttäjiä ei vielä ole
+			// // CommandLineRunner käyttää sovellukselle määriteltyä tietokantaa
+			// if (userRepository.count() > 0) {
+			// 	return;
+			// }
 
 			Order order1 = new Order(
 					"Cat Food Express - Musti ja Mirri Kamppi",

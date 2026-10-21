@@ -6,12 +6,14 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import harjoitus.deliverytracking.web.OrderController;
 import harjoitus.deliverytracking.repository.OrderRepository;
 import harjoitus.deliverytracking.repository.AppUserRepository;
 
 @SpringBootTest
+@ActiveProfiles("test")
 class DeliveryTrackingApplicationTests {
 
 	@Autowired

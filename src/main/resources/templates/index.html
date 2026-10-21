@@ -20,7 +20,7 @@
     <!-- Adminin näkymä -->
     <section sec:authorize="hasRole('ADMIN')">
       <div style="height: 8px;"></div>
-      
+
       <h3>Order Management</h3>
       <p>View, create and manage delivery orders.</p>
 
@@ -38,23 +38,21 @@
       <table>
         <thead>
           <tr>
-            <th>Status</th>
-            <th>Orders</th>
+            <th>All Orders</th>
+            <th>Today's Orders</th>
+            <th>Unassigned Today</th>
+            <th>In Progress</th>
+            <th>Delivered</th>
           </tr>
         </thead>
 
         <tbody>
           <tr>
-            <td>Total Orders</td>
-            <td th:text="${totalCount}">0</td>
-          </tr>
-          <tr>
-            <td>In Progress</td>
-            <td th:text="${inProgressCount}">0</td>
-          </tr>
-          <tr>
-            <td>Delivered</td>
-            <td th:text="${deliveredCount}">0</td>
+            <td th:text="${totalOrderCount}"></td>
+            <td th:text="${totalCount}"></td>
+            <td th:text="${unassignedToday}"></td>
+            <td th:text="${inProgressCount}"></td>
+            <td th:text="${deliveredCount}"></td>
           </tr>
         </tbody>
       </table>

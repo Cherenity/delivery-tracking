@@ -32,8 +32,13 @@ public class HomeController {
     model.addAttribute("userId", user.getId());
     LocalDate today = LocalDate.now();
 
+    model.addAttribute("totalOrderCount",
+        orderRepository.count());
+
     model.addAttribute("totalCount",
         orderRepository.countByDeliveryDate(today));
+    
+    model.addAttribute("unassignedToday", orderRepository.countByDeliveryDateAndStatus(today, Order.OrderStatus.UNASSIGNED));
 
     model.addAttribute("deliveredCount",
         orderRepository.countByDeliveryDateAndStatus(

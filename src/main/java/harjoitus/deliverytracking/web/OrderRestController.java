@@ -2,6 +2,7 @@ package harjoitus.deliverytracking.web;
 
 import java.util.List;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import harjoitus.deliverytracking.domain.Order;
-import harjoitus.deliverytracking.repository.AppUserRepository;
+
 import harjoitus.deliverytracking.repository.OrderRepository;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -19,12 +20,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api")
 public class OrderRestController {
 
-  private final AppUserRepository appUserRepository;
   private final OrderRepository orderRepository;
 
-  public OrderRestController(OrderRepository orderRepository, AppUserRepository appUserRepository) {
+  public OrderRestController(OrderRepository orderRepository,
+      BCryptPasswordEncoder passwordEncoder) {
     this.orderRepository = orderRepository;
-    this.appUserRepository = appUserRepository;
   }
 
   @GetMapping("/orders")
@@ -46,6 +46,12 @@ public class OrderRestController {
   @PostMapping("/orders/bulk")
   public Iterable<Order> addOrders(@RequestBody List<Order> orders) {
     return orderRepository.saveAll(orders);
+  }
+
+  // Voi poistaa useita
+  @DeleteMapping("/orders/bulk")
+  public void deleteOrders(@RequestBody List<Long> ids) {
+    orderRepository.deleteAllById(ids);
   }
 
   @DeleteMapping("/orders/{id}")

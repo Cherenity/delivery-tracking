@@ -15,10 +15,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
 
-  @Bean
-  public BCryptPasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
   @Bean
   public SecurityFilterChain configure(HttpSecurity http) throws Exception {
@@ -40,7 +40,11 @@ public class WebSecurityConfig {
             .permitAll())
         .logout(logout -> logout
             .permitAll())
-        .csrf(csrf -> csrf.disable()); //Tätä ei tuotantoon, vain testaukseen
+        //Tätä ei tuotantoon, vain testaukseen:
+        .csrf(csrf -> csrf.disable()) 
+        // Sallii H2-konsolin iframe-kehykset:
+        .headers(headers -> headers 
+            .frameOptions(frame -> frame.sameOrigin()));
 
     return http.build();
   }

@@ -41,10 +41,10 @@ public class WebSecurityConfig {
         .logout(logout -> logout
             .permitAll())
         //Tätä ei tuotantoon, vain testaukseen:
-        .csrf(csrf -> csrf.disable()) 
-        // Sallii H2-konsolin iframe-kehykset:
-        .headers(headers -> headers 
-            .frameOptions(frame -> frame.sameOrigin()));
+        .csrf(csrf -> csrf.disable()); 
+        // Sallii H2-konsolin iframe-kehykset: (Ei tarvetta kun SQL kanta)
+        // .headers(headers -> headers 
+        //     .frameOptions(frame -> frame.sameOrigin()));
 
     return http.build();
   }

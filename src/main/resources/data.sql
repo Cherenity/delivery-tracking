@@ -11,11 +11,11 @@ VALUES
 -- Toimitustilaukset
 INSERT INTO order_table (customer, address, delivery_date, status, user_id)
 VALUES
-    ('Cat Food Express - Musti ja Mirri Kamppi',
+    ('Musti ja Mirri Kamppi',
      'Urho Kekkosen katu 1, 00100 Helsinki', CURRENT_DATE, 'UNASSIGNED', NULL),
 
-    ('Purrfect Delivery - Musti ja Mirri Hakaniemi',
+    ('Musti ja Mirri Hakaniemi',
      'Siltasaarenkatu 12, 00530 Helsinki', CURRENT_DATE, 'UNASSIGNED', NULL),
 
-    ('Meow Supplies - Musti ja Mirri Ruoholahti',
+    ('Musti ja Mirri Ruoholahti',
      'Itämerenkatu 21, 00180 Helsinki', CURRENT_DATE, 'UNASSIGNED', NULL);

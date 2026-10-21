@@ -73,18 +73,20 @@ public class OrderController {
         return "redirect:/orders";
     }
 
+    // Tästä alkaa olemassa olevien tilausten muokkaukset:
     @GetMapping("/editOrder/{id}")
     public String editOrder(@PathVariable Long id, Model model) {
 
-        model.addAttribute("users", appUserRepository.findAll());
-
+        // model.addAttribute("users", appUserRepository.findAll());
+        //Vaihdettu vain käyttäjiin:
+        model.addAttribute("users", appUserRepository.findByRole("USER"));
         Order order = orderRepository.findById(id).orElseThrow();
         model.addAttribute("order", order);
 
         return "edit-order";
     }
 
-    // Päivittää tilauksen perustiedot
+    // Päivittää olemassa olevan tilauksen perustiedot
     @PostMapping("/updateOrder")
     public String updateOrder(
             @Valid @ModelAttribute("order") Order order,
@@ -110,7 +112,7 @@ public class OrderController {
         return "redirect:/editOrder/" + order.getId();
     }
 
-    // Päivittää tilauksen statuksen ja kuljettajan
+    // Päivittää olemassa olevan tilauksen statuksen ja kuljettajan
     @PostMapping("/updateDelivery")
     public String updateDelivery(
             @RequestParam Long orderId,
@@ -151,6 +153,7 @@ public class OrderController {
         return "redirect:/editOrder/" + orderId;
     }
 
+    // Lisätty harjoituksena yksi metoditasoinen suojaus
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/deleteOrder/{id}")
     public String deleteOrder(@PathVariable Long id) {
@@ -160,9 +163,7 @@ public class OrderController {
         return "redirect:/orders";
     }
 
-    // KULJETTAJIEN MÄÄRITYKSET (SAA LISÄTÄ USEAMPIA)
-
-    /// Näyttää kuljettajien määrityssivun
+    // Tilausten asettaminen kuljettajille | Assign Drivers:
     @GetMapping("/assignDrivers")
     public String showAssignDrivers(Model model) {
 

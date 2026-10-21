@@ -17,6 +17,7 @@ CREATE TABLE order_table (
     delivery_date DATE NOT NULL,
     status VARCHAR(255) NOT NULL,
     delivery_order INT,
+    completed_at TIMESTAMP,
     user_id BIGINT,
     FOREIGN KEY (user_id) REFERENCES user_table(user_id)
 );

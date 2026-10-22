@@ -82,7 +82,8 @@ public class OrderController {
         // model.addAttribute("users", appUserRepository.findAll());
         // Vaihdettu vain käyttäjiin:
         model.addAttribute("users", appUserRepository.findByRole("USER"));
-        Order order = orderRepository.findById(id).orElseThrow();
+        Order order = orderRepository.findById(id)
+                .orElseThrow(() -> new NoSuchElementException("Order not found with ID: " + id));
         model.addAttribute("order", order);
 
         return "edit-order";
@@ -222,7 +223,9 @@ public class OrderController {
 
         for (Long orderId : orderIds) {
 
-            Order order = orderRepository.findById(orderId).orElseThrow();
+            Order order = orderRepository.findById(orderId)
+                    .orElseThrow(() -> new NoSuchElementException(
+                            "Order not found with ID: " + orderId));
 
             // Vain määrittämättömät tilaukset voidaan valita
             if (order.getStatus() != Order.OrderStatus.UNASSIGNED) {

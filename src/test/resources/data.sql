@@ -10,8 +10,8 @@ VALUES
 -- Toimitustilaukset
 INSERT INTO order_table (customer, address, delivery_date, status, delivery_order, user_id)
 VALUES
-    ('Mocca & Tupla Pet Shop', 'Kissankuja 5, Helsinki', CURRENT_DATE, 'ASSIGNED', 1, 2),
-    ('Happy Paws', 'Tassutie 12, Espoo', CURRENT_DATE, 'ASSIGNED', 2, 2),
-    ('Bengal Paradise', 'Keuruuntie 8, Tampere', CURRENT_DATE, 'ASSIGNED', 1, 3),
-    ('Purrfect Supplies', 'Koirapolku 3, Turku', CURRENT_DATE, 'UNASSIGNED', 0, NULL),
-    ('Fluffy Friends', 'Karvakatu 15, Oulu', CURRENT_DATE, 'DELIVERED', 3, 2);
+    ('Musti ja Mirri Hakaniemi', 'Siltasaarenkatu 12, 00530 Helsinki', CURRENT_DATE, 'ASSIGNED', 1, 2),
+    ('Musti ja Mirri Iso Omena', 'Piispansilta 11, 02230 Espoo', CURRENT_DATE, 'ASSIGNED', 2, 2),
+    ('Musti ja Mirri Ratina', 'Vuolteenkatu 1, 33100 Tampere', CURRENT_DATE, 'ASSIGNED', 1, 3),
+    ('Musti ja Mirri Skanssi', 'Skanssinkatu 10, 20730 Turku', CURRENT_DATE, 'UNASSIGNED', 0, NULL),
+    ('Musti ja Mirri Kaakkuri', 'Metsokankaantie 3, 90420 Oulu', CURRENT_DATE, 'DELIVERED', 3, 2);

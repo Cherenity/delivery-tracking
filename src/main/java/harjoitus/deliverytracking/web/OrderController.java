@@ -160,7 +160,8 @@ public class OrderController {
             model.addAttribute("order", order);
             model.addAttribute("users", appUserRepository.findByRole("USER"));
             model.addAttribute("completedAtInput", completedAt);
-            model.addAttribute("deliveryError", "Completion time cannot be in the future");
+            // Hakee errorin luokasta
+            model.addAttribute("deliveryError", timeErrors.iterator().next().getMessage());
 
             return "edit-order";
         }

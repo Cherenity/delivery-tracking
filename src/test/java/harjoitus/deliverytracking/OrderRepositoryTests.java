@@ -38,9 +38,7 @@ public class OrderRepositoryTests {
   @Test
   @Transactional
   public void findAllOrders() {
-    Iterable<Order> orders = orderRepository.findAll();
-
-    assertThat(orders).hasSize(5);
+    assertThat(orderRepository.findAll()).hasSize(5);
   }
 
   // Testaa tilauksen poistamista tietokannasta

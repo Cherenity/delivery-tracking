@@ -4,9 +4,9 @@ TRUNCATE TABLE order_table, user_table RESTART IDENTITY;
 -- Käyttäjät
 INSERT INTO user_table (username, password, email, role)
 VALUES
-    ('ParcelPaws', '$2y$10$ecz0nh189AUTsYCvAvPk3.O08jicnlzU/9SwxaMyCJSkX5sovYAj6', 'parcel@example.com', 'USER'),
-    ('PurrExpress', '$2y$10$1veUPAJwHlAPJ8sK2Ty9H.MmM463UCIQbUy89m1ZzpxmdJZ29kGee', 'express@example.com', 'USER'),
-    ('DispatchCat', '$2y$10$lvkOSGG73mD07IgHWjfNeOe4N9MR6Dz4OG9uX4yk4vpqn.FWVN8Wy', 'dispatch@example.com', 'ADMIN');
+    ('ParcelPaws', '$2y$10$QuiKN9wE.hWB5NzKPKh9IuCuyVueIh81t1oIlYHP4QrNeEo7Joh.G', 'parcel@example.com', 'USER'),
+    ('PurrExpress', '$2y$10$6zsLY.c/UDMUFWGnGqmKCOAGxI8XS.A.iuGDuNAgPYsSyWDT86.NC', 'express@example.com', 'USER'),
+    ('DispatchCat', '$2y$10$mimsJG9ynndpUohYFG4.2OH3FjX6CLXE7g6e6FF2lNIwWWseIBP.m', 'dispatch@example.com', 'ADMIN');
 
 -- Toimitustilaukset
 INSERT INTO order_table (customer, address, delivery_date, status, user_id)

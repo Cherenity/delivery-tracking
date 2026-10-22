@@ -18,6 +18,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.AssertTrue;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 
 @Entity
@@ -88,6 +89,7 @@ public class Order {
   private Integer deliveryOrder;
 
   // Toimituksen valmistumisaika
+  @PastOrPresent(message = "Completion time cannot be in the future")
   @Column(name = "completed_at")
   private LocalDateTime completedAt;
 

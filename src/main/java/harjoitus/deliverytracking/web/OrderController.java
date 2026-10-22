@@ -3,9 +3,11 @@ package harjoitus.deliverytracking.web;
 import harjoitus.deliverytracking.repository.AppUserRepository;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -78,7 +80,7 @@ public class OrderController {
     public String editOrder(@PathVariable Long id, Model model) {
 
         // model.addAttribute("users", appUserRepository.findAll());
-        //Vaihdettu vain käyttäjiin:
+        // Vaihdettu vain käyttäjiin:
         model.addAttribute("users", appUserRepository.findByRole("USER"));
         Order order = orderRepository.findById(id).orElseThrow();
         model.addAttribute("order", order);
@@ -112,16 +114,16 @@ public class OrderController {
         return "redirect:/editOrder/" + order.getId();
     }
 
-    // Päivittää olemassa olevan tilauksen statuksen ja kuljettajan
+    // Päivittää olemassa olevan tilauksen statuksen, kuljettajan ja valmistumisajan
     @PostMapping("/updateDelivery")
     public String updateDelivery(
             @RequestParam Long orderId,
             @RequestParam Order.OrderStatus status,
             @RequestParam(required = false) Long userId,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime completedAt,
             Model model) {
 
-        Order order = orderRepository
-                .findById(orderId)
+        Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new NoSuchElementException("Order not found with ID: " + orderId));
 
         // Päivitetään status ja kuljettaja
@@ -130,24 +132,53 @@ public class OrderController {
         AppUser user = null;
 
         if (userId != null) {
-            user = appUserRepository
-                    .findById(userId)
+            user = appUserRepository.findById(userId)
                     .orElseThrow(() -> new NoSuchElementException("User not found with ID: " + userId));
         }
 
         order.setUser(user);
+
+        // Asetetaan valmistumisaika validointia varten
+        order.setCompletedAt(completedAt);
 
         // Tarkistetaan @AssertTrue-validointi
         var errors = validator.validateProperty(order, "validStatusAndDriver");
 
         if (!errors.isEmpty()) {
             model.addAttribute("order", order);
-            model.addAttribute("users", appUserRepository.findAll());
+            model.addAttribute("users", appUserRepository.findByRole("USER"));
+            model.addAttribute("completedAtInput", completedAt);
             model.addAttribute("deliveryError", "Invalid status and driver combination");
 
             return "edit-order";
         }
 
+        // Tarkistetaan @PastOrPresent-validointi
+        var timeErrors = validator.validateProperty(order, "completedAt");
+
+        if (!timeErrors.isEmpty()) {
+            model.addAttribute("order", order);
+            model.addAttribute("users", appUserRepository.findByRole("USER"));
+            model.addAttribute("completedAtInput", completedAt);
+            model.addAttribute("deliveryError", "Completion time cannot be in the future");
+
+            return "edit-order";
+        }
+
+        // Valmistumisaika sallitaan vain valmiille toimituksille
+        if (completedAt != null &&
+                status != Order.OrderStatus.DELIVERED &&
+                status != Order.OrderStatus.FAILED_DELIVERY) {
+
+            model.addAttribute("order", order);
+            model.addAttribute("users", appUserRepository.findByRole("USER"));
+            model.addAttribute("completedAtInput", completedAt);
+            model.addAttribute("deliveryError", "Completion time is only allowed for completed deliveries");
+
+            return "edit-order";
+        }
+
+        // Tallennetaan status, kuljettaja ja valmistumisaika
         orderRepository.save(order);
 
         return "redirect:/editOrder/" + orderId;

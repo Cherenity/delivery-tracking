@@ -72,11 +72,6 @@ public class UserRestController {
     return ResponseEntity.ok(appUserRepository.findAll());
   }
 
-  // @GetMapping("/users")
-  // public Iterable<AppUser> findAllUsers() {
-  // return appUserRepository.findAll();
-  // }
-
   @PutMapping("/users/{id}")
   public ResponseEntity<Void> updateUser(@PathVariable Long id, @RequestBody Map<String, String> data) {
 

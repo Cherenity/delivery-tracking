@@ -1,6 +1,10 @@
 package harjoitus.deliverytracking.web;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Controller;
@@ -32,13 +36,52 @@ public class HomeController {
     model.addAttribute("userId", user.getId());
     LocalDate today = LocalDate.now();
 
+    // Kuljettajien tämän päivän toimitustilastot
+    List<Map<String, Object>> driverStat = new ArrayList<>();
+    List<AppUser> users  = appUserRepository.findByRole("USER");
+    model.addAttribute("users", users);
+
+    for (AppUser driver : users) {
+      Long userId = driver.getId();
+
+      int total = orderRepository
+          .findByUserIdAndDeliveryDate(userId, today).size();
+      int inProgress = orderRepository
+          .countByUserIdAndDeliveryDateAndStatus(
+              userId, today, Order.OrderStatus.IN_PROGRESS);
+
+      int failed = orderRepository
+          .countByUserIdAndDeliveryDateAndStatus(
+              userId, today, Order.OrderStatus.FAILED_DELIVERY);
+
+      int delivered = orderRepository
+          .countByUserIdAndDeliveryDateAndStatus(
+              userId, today, Order.OrderStatus.DELIVERED);
+
+      Map<String, Object> stats = new HashMap<>();
+
+
+      stats.put("username", driver.getUsername());
+      stats.put("total", total);
+      stats.put("inProgress", inProgress);
+      stats.put("failed", failed);
+      stats.put("delivered", delivered);
+
+      // Lisätään kuljettajan tilastot listaan
+      driverStat.add(stats);
+      
+    }
+
+    model.addAttribute("driverStat", driverStat);
+
     model.addAttribute("totalOrderCount",
         orderRepository.count());
 
     model.addAttribute("totalCount",
         orderRepository.countByDeliveryDate(today));
-    
-    model.addAttribute("unassignedToday", orderRepository.countByDeliveryDateAndStatus(today, Order.OrderStatus.UNASSIGNED));
+
+    model.addAttribute("unassignedToday",
+        orderRepository.countByDeliveryDateAndStatus(today, Order.OrderStatus.UNASSIGNED));
 
     model.addAttribute("deliveredCount",
         orderRepository.countByDeliveryDateAndStatus(

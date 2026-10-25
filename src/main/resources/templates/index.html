@@ -57,6 +57,31 @@
         </tbody>
       </table>
 
+      <h3>Today's Driver Performance</h3>
+      <p>Track each driver's daily deliveries and progress.</p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Driver</th>
+            <th>Orders Today</th>
+            <th>In Progress</th>
+            <th>Delivered</th>
+            <th>Failed</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr th:each="driver : ${driverStat}">
+            <td th:text="${driver.username}"></td>
+            <td th:text="${driver.total}"></td>
+            <td th:text="${driver.inProgress}"></td>
+            <td th:text="${driver.delivered}" style="font-weight: bold;"></td>
+            <td th:text="${driver.failed}"></td>
+          </tr>
+        </tbody>
+      </table>
+
     </section>
 
     <!-- Kuljettajan näkymä -->
